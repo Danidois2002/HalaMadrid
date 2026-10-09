@@ -19,7 +19,17 @@ const store = {
 let cart = store.get('rm-cart', []);
 let newsEdits = store.get('rm-news', { added: [], removed: [] });
 let rosterEdits = store.get('rm-roster', {});
-const isAdmin = () => { try { return sessionStorage.getItem('rm-admin') === '1'; } catch { return false; } };
+/* ---------- Données affichées : celles de l'API quand elle répond, sinon celles de data.js ---------- */
+const site = { online: false, user: null, teams: TEAMS, news: NEWS, products: PRODUCTS };
+const findProduct = (id) => site.products.find((p) => p.id === id);
+const isAdmin = () => {
+  if (api.enabled) return Boolean(site.user);
+  try { return sessionStorage.getItem('rm-admin') === '1'; } catch { return false; }
+};
+/* Le compte démo ne peut retirer que ses propres ajouts ; l'admin (et le mode sans serveur) peut tout retirer */
+const canDelete = (item) => isAdmin() && (!api.enabled || site.user.role === 'admin' || item.createdBy === site.user.id);
+const demoLogin = api.enabled ? { username: 'demo', password: 'halamadrid' } : { username: 'admin', password: 'admin123' };
+const dateFormat = new Intl.DateTimeFormat('fr-BE', { dateStyle: 'short', timeStyle: 'short' });
 
 /* ---------- Petites aides d'interface ---------- */
 let toastTimer;
@@ -172,12 +182,13 @@ function productVisual(product, opts) {
    Données modifiables par l'admin
    ========================================================= */
 function teamPlayers(teamId) {
-  const team = TEAMS[teamId];
+  const team = site.teams[teamId];
+  if (site.online) return team.players;
   const edits = rosterEdits[teamId] || { added: [], removed: [] };
   return [...team.players.filter((p) => !edits.removed.includes(p.id)), ...edits.added];
 }
 function saveRoster(teamId, edits) { rosterEdits[teamId] = edits; store.set('rm-roster', rosterEdits); }
-function allNews() { return [...newsEdits.added, ...NEWS.filter((n) => !newsEdits.removed.includes(n.id))]; }
+function allNews() { return site.online ? site.news : [...newsEdits.added, ...NEWS.filter((n) => !newsEdits.removed.includes(n.id))]; }
 
 /* =========================================================
    Composants
@@ -195,7 +206,7 @@ function newsCard(item) {
         <span class="pill">${esc(item.cat)}</span>
         <h3>${esc(item.title)}</h3>
       </div>
-      ${isAdmin() ? `<button class="admin-remove" type="button" data-remove-news="${esc(item.id)}" aria-label="Supprimer l'actualité ${esc(item.title)}">×</button>` : ''}
+      ${canDelete(item) ? `<button class="admin-remove" type="button" data-remove-news="${esc(item.id)}" aria-label="Supprimer l'actualité ${esc(item.title)}">×</button>` : ''}
     </article>`;
 }
 
@@ -246,10 +257,10 @@ function viewHome() {
           </div>
         </div>
         <div class="hero-visual intro-visual">
-          <div class="hero-jersey">${jerseySvg(PRODUCTS[0].kit, { view: 'back', name: 'BELLINGHAM', number: '5' })}</div>
+          <div class="hero-jersey">${jerseySvg(site.products[0].kit, { view: 'back', name: 'BELLINGHAM', number: '5' })}</div>
           <a class="hero-card" href="#/boutique/domicile">
             <span class="hero-card-label">Maillot domicile</span>
-            <span class="hero-card-price">${euro.format(PRODUCTS[0].price)}</span>
+            <span class="hero-card-price">${euro.format(site.products[0].price)}</span>
             <span class="hero-card-cta">Flocage personnalisé →</span>
           </a>
         </div>
@@ -284,7 +295,7 @@ function viewHome() {
           <div><p class="kicker">Le club</p><h2>Trois équipes, un seul maillot</h2></div>
         </div>
         <div class="teams-grid">
-          ${Object.entries(TEAMS).map(([id, team]) => `
+          ${Object.entries(site.teams).map(([id, team]) => `
             <a class="team-card reveal" href="#/equipes/${id}">
               <img src="${team.photo}" alt="" loading="lazy" />
               <div class="team-card-body">
@@ -304,7 +315,7 @@ function viewHome() {
           <div><p class="kicker">La boutique</p><h2>Porte les couleurs, avec ton nom</h2></div>
           <a class="link-arrow" href="#/boutique">Toute la boutique →</a>
         </div>
-        <div class="products-grid">${PRODUCTS.filter((p) => p.type === 'jersey').slice(0, 3).map(productCard).join('')}</div>
+        <div class="products-grid">${site.products.filter((p) => p.type === 'jersey').slice(0, 3).map(productCard).join('')}</div>
       </div>
     </section>
 
@@ -321,7 +332,7 @@ function viewHome() {
 }
 
 function viewTeam(teamId) {
-  const team = TEAMS[teamId];
+  const team = site.teams[teamId];
   if (!team) return viewNotFound();
   const players = teamPlayers(teamId);
   const byId = Object.fromEntries(players.map((p) => [p.id, p]));
@@ -341,7 +352,7 @@ function viewTeam(teamId) {
       <div class="container page-hero-grid">
         <div>
           <nav class="tabs" aria-label="Équipes">
-            ${Object.entries(TEAMS).map(([id, t]) => `<a href="#/equipes/${id}" ${id === teamId ? 'aria-current="page"' : ''}>${t.short}</a>`).join('')}
+            ${Object.entries(site.teams).map(([id, t]) => `<a href="#/equipes/${id}" ${id === teamId ? 'aria-current="page"' : ''}>${t.short}</a>`).join('')}
           </nav>
           <h1>${team.name}</h1>
           <p class="page-lead">${team.intro}</p>
@@ -406,7 +417,7 @@ function viewTeam(teamId) {
                       ${avatar(p)}
                       <strong>${esc(p.name)}</strong>
                       <span>${posLabel(p.pos, team.feminine)}</span>
-                      ${isAdmin() ? `<button class="admin-remove" type="button" data-remove-player="${esc(p.id)}" aria-label="Retirer ${esc(p.name)}">×</button>` : ''}
+                      ${canDelete(p) ? `<button class="admin-remove" type="button" data-remove-player="${esc(p.id)}" aria-label="Retirer ${esc(p.name)}">×</button>` : ''}
                     </li>`).join('')}
                 </ul>
               </div>`;
@@ -461,13 +472,13 @@ function viewShop() {
             <button type="button" class="chip" data-type="other" aria-pressed="false">Accessoires</button>
           </div>
         </div>
-        <div class="products-grid" id="products">${PRODUCTS.map(productCard).join('')}</div>
+        <div class="products-grid" id="products">${site.products.map(productCard).join('')}</div>
       </div>
     </section>`;
 }
 
 function viewProduct(id) {
-  const product = PRODUCTS.find((p) => p.id === id);
+  const product = findProduct(id);
   if (!product) return viewNotFound();
   const jersey = product.type === 'jersey';
   return `
@@ -540,7 +551,7 @@ function viewProduct(id) {
     <section class="section section-tight">
       <div class="container">
         <div class="section-head"><div><p class="kicker">Vous aimerez aussi</p><h2>Complète ta tenue</h2></div></div>
-        <div class="products-grid">${PRODUCTS.filter((p) => p.id !== id).slice(0, 3).map(productCard).join('')}</div>
+        <div class="products-grid">${site.products.filter((p) => p.id !== id).slice(0, 3).map(productCard).join('')}</div>
       </div>
     </section>`;
 }
@@ -579,17 +590,23 @@ function viewContact() {
 
 function viewLogin() {
   if (isAdmin()) {
+    const demo = api.enabled && site.user.role === 'demo';
     return `
       <section class="section auth-page">
+        <div class="auth-stack">
         <div class="card auth-card reveal">
           <span class="crest-badge crest-lg"><img src="img/crest.webp" alt="" /></span>
           <h1>Vous êtes connecté</h1>
-          <p>Le mode admin est actif : publiez des actualités et modifiez les effectifs depuis leurs pages.</p>
+          <p>${demo
+            ? 'Compte démo : publiez des actualités et modifiez les effectifs. Vos ajouts restent visibles 24 h et vous ne pouvez retirer que ce que vous avez ajouté.'
+            : 'Le mode admin est actif : publiez des actualités et modifiez les effectifs depuis leurs pages.'}</p>
           <div class="auth-actions">
             <a class="btn btn-navy" href="#/actualites">Gérer les actualités</a>
             <a class="btn btn-ghost" href="#/equipes/masculine">Gérer les effectifs</a>
             <button class="link-btn" type="button" data-logout>Se déconnecter</button>
           </div>
+        </div>
+        ${api.enabled ? '<div class="card orders-card reveal" id="orders-panel"><h2 class="card-title">Dernières commandes</h2><p class="empty-note">Chargement…</p></div>' : ''}
         </div>
       </section>`;
   }
@@ -604,7 +621,7 @@ function viewLogin() {
         <p class="form-error" id="login-error" role="alert"></p>
         <button class="btn btn-navy btn-block" type="submit">Se connecter</button>
         <div class="demo-creds">
-          <p><b>Démo</b> · identifiant <code>admin</code>, mot de passe <code>admin123</code></p>
+          <p><b>Démo</b> · identifiant <code>${demoLogin.username}</code>, mot de passe <code>${demoLogin.password}</code></p>
           <button class="link-btn" type="button" data-fill-demo>Remplir automatiquement</button>
         </div>
       </form>
@@ -679,7 +696,7 @@ function setupShop() {
 }
 
 function setupProduct(id) {
-  const product = PRODUCTS.find((p) => p.id === id);
+  const product = findProduct(id);
   if (!product) return;
   const form = $('#product-form');
   const flip = $('#flip');
@@ -746,28 +763,92 @@ function setupProduct(id) {
 }
 
 function setupLogin() {
+  if (isAdmin() && api.enabled) loadOrders();
   const form = $('#login-form');
   if (!form) return;
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const ok = form.elements.username.value.trim() === 'admin' && form.elements.password.value === 'admin123';
-    if (!ok) { $('#login-error').textContent = "Nom d'utilisateur ou mot de passe incorrect."; return; }
-    try { sessionStorage.setItem('rm-admin', '1'); } catch { /* ignore */ }
+    const username = form.elements.username.value.trim();
+    const password = form.elements.password.value;
+    const error = $('#login-error');
+    if (api.enabled) {
+      const button = $('[type="submit"]', form);
+      button.disabled = true;
+      error.textContent = '';
+      try {
+        const { token, user } = await api.post('/api/auth/login', { username, password });
+        api.token.set(token);
+        site.user = user;
+      } catch (err) {
+        error.textContent = err.message;
+        return;
+      } finally {
+        button.disabled = false;
+      }
+      if (!site.online) await loadRemote();
+    } else {
+      if (username !== 'admin' || password !== 'admin123') { error.textContent = "Nom d'utilisateur ou mot de passe incorrect."; return; }
+      try { sessionStorage.setItem('rm-admin', '1'); } catch { /* ignore */ }
+    }
     updateChrome();
     toast('Connexion réussie : mode admin activé');
     location.hash = '#/actualites';
   });
   $('[data-fill-demo]').addEventListener('click', () => {
-    form.elements.username.value = 'admin';
-    form.elements.password.value = 'admin123';
+    form.elements.username.value = demoLogin.username;
+    form.elements.password.value = demoLogin.password;
     $('#login-error').textContent = '';
   });
+}
+
+/* Dernières commandes enregistrées par l'API (espace admin) */
+async function loadOrders() {
+  const panel = $('#orders-panel');
+  if (!panel) return;
+  try {
+    const { stats, orders } = await api.get('/api/orders');
+    const lines = (o) => o.items.map((i) => `${i.qty} × ${esc(i.name)}${i.size ? ` · ${esc(i.size)}` : ''}${i.flocageName ? ` · ${esc(i.flocageName)} ${esc(i.flocageNumber)}` : ''}`).join('<br>');
+    panel.innerHTML = `
+      <h2 class="card-title">Dernières commandes</h2>
+      <div class="order-stats">
+        <div><b>${stats.count}</b><span>commande${stats.count > 1 ? 's' : ''}</span></div>
+        <div><b>${euro.format(stats.revenue)}</b><span>montant total</span></div>
+      </div>
+      ${orders.length
+        ? `<ul class="order-list">${orders.map((o) => `
+            <li>
+              <div class="order-ref"><b>${esc(o.reference)}</b><span>${dateFormat.format(new Date(o.createdAt))}</span></div>
+              <p>${lines(o)}</p>
+              <strong>${euro.format(o.total)}</strong>
+            </li>`).join('')}</ul>`
+        : '<p class="empty-note">Aucune commande pour le moment : passez-en une depuis la boutique.</p>'}`;
+  } catch (err) {
+    $('.empty-note', panel).textContent = err.message;
+  }
+}
+
+async function refreshNews() { site.news = await api.get('/api/news'); }
+async function refreshTeam(teamId) { site.teams[teamId] = await api.get(`/api/teams/${encodeURIComponent(teamId)}`); }
+
+/* Lance une action admin sur l'API, puis réaffiche la page sans la faire remonter */
+async function runAdmin(action, success) {
+  try {
+    await action();
+    toast(success);
+    rerender();
+  } catch (err) {
+    toast(err.message);
+  }
 }
 
 /* ---------- Actions admin (délégation) ---------- */
 document.addEventListener('click', (e) => {
   const logout = e.target.closest('[data-logout]');
   if (logout) {
+    if (api.enabled) {
+      api.token.clear();
+      site.user = null;
+    }
     try { sessionStorage.removeItem('rm-admin'); } catch { /* ignore */ }
     updateChrome();
     toast('Vous êtes déconnecté');
@@ -777,6 +858,10 @@ document.addEventListener('click', (e) => {
   const removeNews = e.target.closest('[data-remove-news]');
   if (removeNews) {
     const id = removeNews.dataset.removeNews;
+    if (api.enabled) {
+      runAdmin(async () => { await api.del(`/api/news/${encodeURIComponent(id)}`); await refreshNews(); }, 'Actualité supprimée');
+      return;
+    }
     if (newsEdits.added.some((n) => n.id === id)) newsEdits.added = newsEdits.added.filter((n) => n.id !== id);
     else newsEdits.removed.push(id);
     store.set('rm-news', newsEdits);
@@ -787,8 +872,12 @@ document.addEventListener('click', (e) => {
   const removePlayer = e.target.closest('[data-remove-player]');
   if (removePlayer) {
     const teamId = $('#roster').dataset.team;
-    const edits = rosterEdits[teamId] || { added: [], removed: [] };
     const id = removePlayer.dataset.removePlayer;
+    if (api.enabled) {
+      runAdmin(async () => { await api.del(`/api/players/${encodeURIComponent(id)}`); await refreshTeam(teamId); }, 'Membre retiré de l’effectif');
+      return;
+    }
+    const edits = rosterEdits[teamId] || { added: [], removed: [] };
     if (edits.added.some((p) => p.id === id)) edits.added = edits.added.filter((p) => p.id !== id);
     else edits.removed.push(id);
     saveRoster(teamId, edits);
@@ -797,7 +886,7 @@ document.addEventListener('click', (e) => {
     return;
   }
   if (e.target.closest('[data-add-news]')) {
-    const images = [...new Set(NEWS.map((n) => n.img))];
+    const images = [...new Set(NEWS.map((n) => n.img).filter(Boolean))];
     openModal(`
       <form class="admin-form" id="news-form" novalidate>
         <h2 id="modal-title">Publier une actualité</h2>
@@ -812,11 +901,24 @@ document.addEventListener('click', (e) => {
         <p class="form-error" id="news-error" role="alert"></p>
         <button class="btn btn-navy btn-block" type="submit">Publier</button>
       </form>`);
-    $('#news-form').addEventListener('submit', (ev) => {
+    $('#news-form').addEventListener('submit', async (ev) => {
       ev.preventDefault();
       const f = ev.currentTarget;
       const title = f.elements.title.value.trim();
       if (!title) { $('#news-error').textContent = 'Indiquez un titre.'; return; }
+      if (api.enabled) {
+        try {
+          await api.post('/api/news', { title, cat: f.elements.cat.value, img: f.elements.img.value });
+          await refreshNews();
+        } catch (err) {
+          $('#news-error').textContent = err.details ? 'Titre trop court (3 caractères minimum) ou trop long.' : err.message;
+          return;
+        }
+        modal.close();
+        toast('Actualité publiée');
+        rerender();
+        return;
+      }
       newsEdits.added.unshift({ id: `admin-${Date.now()}`, title, cat: f.elements.cat.value, img: f.elements.img.value });
       store.set('rm-news', newsEdits);
       modal.close();
@@ -828,7 +930,7 @@ document.addEventListener('click', (e) => {
   const addPlayer = e.target.closest('[data-add-player]');
   if (addPlayer) {
     const teamId = addPlayer.dataset.addPlayer;
-    const team = TEAMS[teamId];
+    const team = site.teams[teamId];
     openModal(`
       <form class="admin-form" id="player-form" novalidate>
         <h2 id="modal-title">Ajouter ${team.feminine ? 'une joueuse' : 'un joueur'}</h2>
@@ -837,11 +939,24 @@ document.addEventListener('click', (e) => {
         <p class="form-error" id="player-error" role="alert"></p>
         <button class="btn btn-navy btn-block" type="submit">Ajouter à l'effectif</button>
       </form>`);
-    $('#player-form').addEventListener('submit', (ev) => {
+    $('#player-form').addEventListener('submit', async (ev) => {
       ev.preventDefault();
       const f = ev.currentTarget;
       const name = f.elements.name.value.trim();
       if (!name) { $('#player-error').textContent = 'Indiquez un nom.'; return; }
+      if (api.enabled) {
+        try {
+          await api.post(`/api/teams/${encodeURIComponent(teamId)}/players`, { name, pos: f.elements.pos.value });
+          await refreshTeam(teamId);
+        } catch (err) {
+          $('#player-error').textContent = err.details ? 'Nom trop court (2 caractères minimum) ou trop long.' : err.message;
+          return;
+        }
+        modal.close();
+        toast(`${name} a rejoint l'effectif`);
+        rerender();
+        return;
+      }
       const edits = rosterEdits[teamId] || { added: [], removed: [] };
       edits.added.push({ id: `admin-${Date.now()}`, name, pos: f.elements.pos.value });
       saveRoster(teamId, edits);
@@ -856,7 +971,7 @@ document.addEventListener('click', (e) => {
    Panier
    ========================================================= */
 const cartKey = (item) => [item.productId, item.size, item.flocage ? `${item.flocage.name}#${item.flocage.number}` : ''].join('|');
-const unitPrice = (item) => PRODUCTS.find((p) => p.id === item.productId).price + (item.flocage ? FLOCAGE_PRICE : 0);
+const unitPrice = (item) => findProduct(item.productId).price + (item.flocage ? FLOCAGE_PRICE : 0);
 const cartCount = () => cart.reduce((n, i) => n + i.qty, 0);
 const subtotal = () => cart.reduce((sum, i) => sum + unitPrice(i) * i.qty, 0);
 const shipping = (sub) => (sub === 0 || sub >= 100 ? 0 : 6.9);
@@ -888,7 +1003,7 @@ function renderCart() {
     return;
   }
   $('#cart-body').innerHTML = `<ul class="cart-list">${cart.map((item, idx) => {
-    const product = PRODUCTS.find((p) => p.id === item.productId);
+    const product = findProduct(item.productId);
     const details = [item.size && `Taille ${item.size}`, item.flocage && `Flocage ${item.flocage.name} ${item.flocage.number}`].filter(Boolean).join(' · ');
     return `
       <li class="cart-item">
@@ -950,24 +1065,48 @@ drawer.addEventListener('click', (e) => {
   }
   const remove = e.target.closest('[data-cart-remove]');
   if (remove) { cart.splice(Number(remove.dataset.cartRemove), 1); saveCart(); return; }
-  if (e.target.closest('#checkout')) {
-    const total = subtotal() + shipping(subtotal());
-    const ref = `RM-${Math.floor(100000 + Math.random() * 900000)}`;
-    const lines = cart.map((i) => `<li>${i.qty} × ${esc(PRODUCTS.find((p) => p.id === i.productId).name)}${i.flocage ? ` (${esc(i.flocage.name)} ${esc(i.flocage.number)})` : ''}</li>`).join('');
-    cart = [];
-    saveCart();
-    closeCart();
-    openModal(`
-      <div class="order-done">
-        <span class="check-badge" aria-hidden="true">✓</span>
-        <h2 id="modal-title">Commande confirmée&nbsp;!</h2>
-        <p>Référence <b>${ref}</b> · ${euro.format(total)}</p>
-        <ul>${lines}</ul>
-        <p class="demo-note">Ceci est une démonstration : aucune commande réelle n'a été passée.</p>
-        <button class="btn btn-navy btn-block" type="button" data-close-modal>Continuer</button>
-      </div>`);
-  }
+  const checkoutBtn = e.target.closest('#checkout');
+  if (checkoutBtn) checkout(checkoutBtn);
 });
+
+async function checkout(button) {
+  let order;
+  if (api.enabled) {
+    button.disabled = true;
+    button.textContent = 'Envoi de la commande…';
+    try {
+      order = await api.post('/api/orders', {
+        items: cart.map((i) => ({ productId: i.productId, size: i.size, flocage: i.flocage, qty: i.qty })),
+      });
+    } catch (err) {
+      toast(err.message);
+      button.disabled = false;
+      button.textContent = 'Commander';
+      return;
+    }
+  } else {
+    order = {
+      reference: `RM-${Math.floor(100000 + Math.random() * 900000)}`,
+      total: subtotal() + shipping(subtotal()),
+      items: cart.map((i) => ({ name: findProduct(i.productId).name, qty: i.qty, flocage: i.flocage })),
+    };
+  }
+  const lines = order.items.map((i) => `<li>${i.qty} × ${esc(i.name)}${i.flocage ? ` (${esc(i.flocage.name)} ${esc(i.flocage.number)})` : ''}</li>`).join('');
+  cart = [];
+  saveCart();
+  closeCart();
+  openModal(`
+    <div class="order-done">
+      <span class="check-badge" aria-hidden="true">✓</span>
+      <h2 id="modal-title">Commande confirmée&nbsp;!</h2>
+      <p>Référence <b>${esc(order.reference)}</b> · ${euro.format(order.total)}</p>
+      <ul>${lines}</ul>
+      <p class="demo-note">${api.enabled
+        ? 'Commande enregistrée sur le serveur. Démonstration : aucun paiement ni livraison.'
+        : "Ceci est une démonstration : aucune commande réelle n'a été passée."}</p>
+      <button class="btn btn-navy btn-block" type="button" data-close-modal>Continuer</button>
+    </div>`);
+}
 
 /* =========================================================
    Routeur
@@ -975,13 +1114,13 @@ drawer.addEventListener('click', (e) => {
 const titles = { accueil: '¡Hala Madrid!', equipes: 'Équipes', actualites: 'Actualités', boutique: 'Boutique', contact: 'Contact', connexion: 'Espace admin' };
 let firstRender = true;
 
-function route() {
+function route(options = {}) {
   const [, section = '', param = ''] = (location.hash || '#/').split('/');
   let html;
   let setup = () => {};
   switch (section) {
     case '': html = viewHome(); setup = setupCounters; break;
-    case 'equipes': html = viewTeam(param || 'masculine'); setup = () => TEAMS[param || 'masculine'] && setupTeam(param || 'masculine'); break;
+    case 'equipes': html = viewTeam(param || 'masculine'); setup = () => site.teams[param || 'masculine'] && setupTeam(param || 'masculine'); break;
     case 'actualites': html = viewNews(); setup = setupNews; break;
     case 'boutique': html = param ? viewProduct(param) : viewShop(); setup = () => (param ? setupProduct(param) : setupShop()); break;
     case 'contact': html = viewContact(); break;
@@ -990,21 +1129,30 @@ function route() {
   }
   app.innerHTML = `<div class="page">${html}</div>`;
   setup();
+  if (options.keepScroll) $('.reveal', app).forEach((el) => el.classList.add('in-view'));
   observeReveals();
   const key = section || 'accueil';
   $$('.nav a').forEach((a) => { if (a.dataset.route === key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   document.title = `${titles[key] || 'Page introuvable'} · Real Madrid, site de supporters`;
-  window.scrollTo({ top: 0, behavior: 'auto' });
-  if (!firstRender) app.focus({ preventScroll: true });
+  if (!options.keepScroll) {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    if (!firstRender) app.focus({ preventScroll: true });
+  }
   firstRender = false;
   closeMenu();
 }
 
+const rerender = () => route({ keepScroll: true });
+
 /* ---------- Habillage commun ---------- */
 function updateChrome() {
   const admin = isAdmin();
+  const demo = admin && api.enabled && site.user.role === 'demo';
   $('#admin-bar').hidden = !admin;
-  $('#account-label').textContent = admin ? 'Admin' : 'Connexion';
+  $('#admin-bar-text').innerHTML = demo
+    ? '<b>Compte démo</b> : vos ajouts restent visibles 24 h.'
+    : '<b>Mode admin</b> : vous pouvez publier des actualités et modifier les effectifs.';
+  $('#account-label').textContent = admin ? (demo ? 'Démo' : 'Admin') : 'Connexion';
   $('#account-link').classList.toggle('is-admin', admin);
 }
 
@@ -1053,9 +1201,40 @@ window.addEventListener('scroll', () => {
   requestAnimationFrame(() => { $('#topbar').classList.toggle('scrolled', window.scrollY > 10); ticking = false; });
 }, { passive: true });
 
+/* ---------- API ---------- */
+api.onSlow = () => toast('Le serveur se réveille (hébergement gratuit), encore quelques secondes…');
+api.onUnauthorized = () => {
+  api.token.clear();
+  site.user = null;
+  updateChrome();
+  toast('Session expirée, reconnectez-vous.');
+};
+
+async function loadRemote() {
+  if (!api.enabled) return;
+  try {
+    const [teams, news, products] = await Promise.all([
+      api.get('/api/teams', { quiet: true }), api.get('/api/news', { quiet: true }), api.get('/api/products', { quiet: true }),
+    ]);
+    if (api.token.get()) site.user = (await api.get('/api/auth/me', { quiet: true }).catch(() => ({ user: null }))).user;
+    site.teams = Object.fromEntries(teams.map((t) => [t.id, t]));
+    site.news = news;
+    site.products = products;
+    site.online = true;
+  } catch {
+    return; // serveur injoignable : le site continue avec les données de data.js
+  }
+  updateChrome();
+  // Pas de nouveau rendu pendant une saisie (fiche produit, formulaire de connexion)
+  const [, section = '', param = ''] = (location.hash || '#/').split('/');
+  const typing = (section === 'boutique' && param) || (section === 'connexion' && !isAdmin());
+  if (!typing) rerender();
+}
+
 /* ---------- Démarrage ---------- */
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.addEventListener('hashchange', route);
 updateChrome();
 renderCart();
 route();
+loadRemote();

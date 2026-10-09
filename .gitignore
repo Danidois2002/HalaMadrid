@@ -1,3 +1,8 @@
 # Ancienne version PHP et réglages de l'IDE : gardés en local, pas publiés
 _ancienne-version/
 .idea/
+
+# API : dépendances, secrets locaux et base PGlite locale
+api/node_modules/
+api/.env
+api/.pglite/
