@@ -1,5 +1,5 @@
 {
-  "version": "2026-27.1",
+  "version": "2026-27.2",
   "teams": [
     {
       "id": "masculine",
@@ -18,7 +18,7 @@
         {
           "name": "José Mourinho",
           "role": "Entraîneur",
-          "photo": "img/staff/mourinho.webp"
+          "photo": "img/staff/mourinho.webp?v=2627"
         }
       ],
       "lineup": {
@@ -48,157 +48,157 @@
           "id": "courtois",
           "name": "Thibaut Courtois",
           "pos": "GK",
-          "photo": "img/joueurs/courtois.webp"
+          "photo": "img/joueurs/courtois.webp?v=2627"
         },
         {
           "id": "lunin",
           "name": "Andriy Lunin",
           "pos": "GK",
-          "photo": "img/joueurs/lunin.webp"
+          "photo": "img/joueurs/lunin.webp?v=2627"
         },
         {
           "id": "asencio",
           "name": "Raúl Asencio",
           "pos": "DEF",
-          "photo": "img/joueurs/asencio.webp"
+          "photo": "img/joueurs/asencio.webp?v=2627"
         },
         {
           "id": "militao",
           "name": "Éder Militão",
           "pos": "DEF",
-          "photo": "img/joueurs/militao.webp"
+          "photo": "img/joueurs/militao.webp?v=2627"
         },
         {
           "id": "huijsen",
           "name": "Dean Huijsen",
           "pos": "DEF",
-          "photo": "img/joueurs/huijsen.webp"
+          "photo": "img/joueurs/huijsen.webp?v=2627"
         },
         {
           "id": "trent",
           "name": "Trent Alexander-Arnold",
           "short": "Trent",
           "pos": "DEF",
-          "photo": "img/joueurs/trent.webp"
+          "photo": "img/joueurs/trent.webp?v=2627"
         },
         {
           "id": "konate",
           "name": "Ibrahima Konaté",
           "pos": "DEF",
-          "photo": "img/joueurs/konate.webp"
+          "photo": "img/joueurs/konate.webp?v=2627"
         },
         {
           "id": "cucurella",
           "name": "Marc Cucurella",
           "pos": "DEF",
-          "photo": "img/joueurs/cucurella.webp"
+          "photo": "img/joueurs/cucurella.webp?v=2627"
         },
         {
           "id": "rudiger",
           "name": "Antonio Rüdiger",
           "pos": "DEF",
-          "photo": "img/joueurs/rudiger.webp"
+          "photo": "img/joueurs/rudiger.webp?v=2627"
         },
         {
           "id": "mendy",
           "name": "Ferland Mendy",
           "pos": "DEF",
-          "photo": "img/joueurs/mendy.webp"
+          "photo": "img/joueurs/mendy.webp?v=2627"
         },
         {
           "id": "dumfries",
           "name": "Denzel Dumfries",
           "pos": "DEF",
-          "photo": "img/joueurs/dumfries.webp"
+          "photo": "img/joueurs/dumfries.webp?v=2627"
         },
         {
           "id": "bellingham",
           "name": "Jude Bellingham",
           "pos": "MID",
-          "photo": "img/joueurs/bellingham.webp"
+          "photo": "img/joueurs/bellingham.webp?v=2627"
         },
         {
           "id": "camavinga",
           "name": "Eduardo Camavinga",
           "pos": "MID",
-          "photo": "img/joueurs/camavinga.webp"
+          "photo": "img/joueurs/camavinga.webp?v=2627"
         },
         {
           "id": "valverde",
           "name": "Federico Valverde",
           "pos": "MID",
-          "photo": "img/joueurs/valverde.webp"
+          "photo": "img/joueurs/valverde.webp?v=2627"
         },
         {
           "id": "tchouameni",
           "name": "Aurélien Tchouaméni",
           "pos": "MID",
-          "photo": "img/joueurs/tchouameni.webp"
+          "photo": "img/joueurs/tchouameni.webp?v=2627"
         },
         {
           "id": "guler",
           "name": "Arda Güler",
           "pos": "MID",
-          "photo": "img/joueurs/guler.webp"
+          "photo": "img/joueurs/guler.webp?v=2627"
         },
         {
           "id": "bernardo",
           "name": "Bernardo Silva",
           "short": "Bernardo",
           "pos": "MID",
-          "photo": "img/joueurs/bernardo.webp"
+          "photo": "img/joueurs/bernardo.webp?v=2627"
         },
         {
           "id": "thiago",
           "name": "Thiago Pitarch",
           "short": "Thiago",
           "pos": "MID",
-          "photo": "img/joueurs/thiago.webp"
+          "photo": "img/joueurs/thiago.webp?v=2627"
         },
         {
           "id": "brahim",
           "name": "Brahim Díaz",
           "short": "Brahim",
           "pos": "ATT",
-          "photo": "img/joueurs/brahim.webp"
+          "photo": "img/joueurs/brahim.webp?v=2627"
         },
         {
           "id": "vinicius",
           "name": "Vinícius Jr.",
           "short": "Vinícius",
           "pos": "ATT",
-          "photo": "img/joueurs/vinicius.webp"
+          "photo": "img/joueurs/vinicius.webp?v=2627"
         },
         {
           "id": "endrick",
           "name": "Endrick",
           "pos": "ATT",
-          "photo": "img/joueurs/endrick.webp"
+          "photo": "img/joueurs/endrick.webp?v=2627"
         },
         {
           "id": "mbappe",
           "name": "Kylian Mbappé",
           "pos": "ATT",
-          "photo": "img/joueurs/mbappe.webp"
+          "photo": "img/joueurs/mbappe.webp?v=2627"
         },
         {
           "id": "rodrygo",
           "name": "Rodrygo Goes",
           "short": "Rodrygo",
           "pos": "ATT",
-          "photo": "img/joueurs/rodrygo.webp"
+          "photo": "img/joueurs/rodrygo.webp?v=2627"
         },
         {
           "id": "espi",
           "name": "Carlos Espí",
           "pos": "ATT",
-          "photo": "img/joueurs/espi.webp"
+          "photo": "img/joueurs/espi.webp?v=2627"
         },
         {
           "id": "diomande",
           "name": "Yan Diomande",
           "pos": "ATT",
-          "photo": "img/joueurs/diomande.webp"
+          "photo": "img/joueurs/diomande.webp?v=2627"
         }
       ]
     },
@@ -219,7 +219,7 @@
         {
           "name": "Pau Quesada",
           "role": "Entraîneur",
-          "photo": "img/staff/quesada.webp"
+          "photo": "img/staff/quesada.webp?v=2627"
         }
       ],
       "lineup": {
@@ -249,151 +249,151 @@
           "id": "frohms",
           "name": "Merle Frohms",
           "pos": "GK",
-          "photo": "img/joueurs/frohms.webp"
+          "photo": "img/joueurs/frohms.webp?v=2627"
         },
         {
           "id": "laia",
           "name": "Laia López",
           "short": "Laia",
           "pos": "GK",
-          "photo": "img/joueurs/laia.webp"
+          "photo": "img/joueurs/laia.webp?v=2627"
         },
         {
           "id": "noe",
           "name": "Noemí Bejarano",
           "short": "Noe",
           "pos": "DEF",
-          "photo": "img/joueurs/noe.webp"
+          "photo": "img/joueurs/noe.webp?v=2627"
         },
         {
           "id": "levels",
           "name": "Janou Levels",
           "pos": "DEF",
-          "photo": "img/joueurs/levels.webp"
+          "photo": "img/joueurs/levels.webp?v=2627"
         },
         {
           "id": "cristobal",
           "name": "Silvia Cristóbal",
           "pos": "DEF",
-          "photo": "img/joueurs/cristobal.webp"
+          "photo": "img/joueurs/cristobal.webp?v=2627"
         },
         {
           "id": "mendez",
           "name": "María Méndez",
           "pos": "DEF",
-          "photo": "img/joueurs/mendez.webp"
+          "photo": "img/joueurs/mendez.webp?v=2627"
         },
         {
           "id": "holmgaard",
           "name": "Sara Holmgaard",
           "pos": "DEF",
-          "photo": "img/joueurs/holmgaard.webp"
+          "photo": "img/joueurs/holmgaard.webp?v=2627"
         },
         {
           "id": "andersson",
           "name": "Bella Andersson",
           "pos": "DEF",
-          "photo": "img/joueurs/andersson.webp"
+          "photo": "img/joueurs/andersson.webp?v=2627"
         },
         {
           "id": "lakrar",
           "name": "Maëlle Lakrar",
           "pos": "DEF",
-          "photo": "img/joueurs/lakrar.webp"
+          "photo": "img/joueurs/lakrar.webp?v=2627"
         },
         {
           "id": "toletti",
           "name": "Sandie Toletti",
           "pos": "MID",
-          "photo": "img/joueurs/toletti.webp"
+          "photo": "img/joueurs/toletti.webp?v=2627"
         },
         {
           "id": "dabritz",
           "name": "Sara Däbritz",
           "pos": "MID",
-          "photo": "img/joueurs/dabritz.webp"
+          "photo": "img/joueurs/dabritz.webp?v=2627"
         },
         {
           "id": "irune",
           "name": "Irune Dorado",
           "short": "Irune",
           "pos": "MID",
-          "photo": "img/joueurs/irune.webp"
+          "photo": "img/joueurs/irune.webp?v=2627"
         },
         {
           "id": "angeldahl",
           "name": "Filippa Angeldahl",
           "pos": "MID",
-          "photo": "img/joueurs/angeldahl.webp"
+          "photo": "img/joueurs/angeldahl.webp?v=2627"
         },
         {
           "id": "andreia",
           "name": "Andreia Jacinto",
           "pos": "MID",
-          "photo": "img/joueurs/andreia.webp"
+          "photo": "img/joueurs/andreia.webp?v=2627"
         },
         {
           "id": "elisa",
           "name": "Elisa Senß",
           "short": "Elisa",
           "pos": "MID",
-          "photo": "img/joueurs/elisa.webp"
+          "photo": "img/joueurs/elisa.webp?v=2627"
         },
         {
           "id": "caruso",
           "name": "Arianna Caruso",
           "pos": "MID",
-          "photo": "img/joueurs/caruso.webp"
+          "photo": "img/joueurs/caruso.webp?v=2627"
         },
         {
           "id": "navarro",
           "name": "Eva Navarro",
           "pos": "ATT",
-          "photo": "img/joueurs/navarro.webp"
+          "photo": "img/joueurs/navarro.webp?v=2627"
         },
         {
           "id": "comendador",
           "name": "Paula Comendador",
           "pos": "ATT",
-          "photo": "img/joueurs/comendador.webp"
+          "photo": "img/joueurs/comendador.webp?v=2627"
         },
         {
           "id": "keukelaar",
           "name": "Lotte Keukelaar",
           "pos": "ATT",
-          "photo": "img/joueurs/keukelaar.webp"
+          "photo": "img/joueurs/keukelaar.webp?v=2627"
         },
         {
           "id": "bruun",
           "name": "Signe Bruun",
           "pos": "ATT",
-          "photo": "img/joueurs/bruun.webp"
+          "photo": "img/joueurs/bruun.webp?v=2627"
         },
         {
           "id": "athenea",
           "name": "Athenea del Castillo",
           "short": "Athenea",
           "pos": "ATT",
-          "photo": "img/joueurs/athenea.webp"
+          "photo": "img/joueurs/athenea.webp?v=2627"
         },
         {
           "id": "beerensteyn",
           "name": "Lineth Beerensteyn",
           "pos": "ATT",
-          "photo": "img/joueurs/beerensteyn.webp"
+          "photo": "img/joueurs/beerensteyn.webp?v=2627"
         },
         {
           "id": "schroder",
           "name": "Felicia Schröder",
           "pos": "ATT",
-          "photo": "img/joueurs/schroder.webp"
+          "photo": "img/joueurs/schroder.webp?v=2627"
         },
         {
           "id": "linda",
           "name": "Linda Caicedo",
           "short": "Linda",
           "pos": "ATT",
-          "photo": "img/joueurs/linda.webp"
+          "photo": "img/joueurs/linda.webp?v=2627"
         }
       ]
     },
@@ -414,7 +414,7 @@
         {
           "name": "Julián López de Lerma",
           "role": "Entraîneur",
-          "photo": "img/staff/lopez-de-lerma.webp"
+          "photo": "img/staff/lopez-de-lerma.webp?v=2627"
         }
       ],
       "lineup": {
@@ -444,140 +444,140 @@
           "id": "mestre",
           "name": "Sergio Mestre",
           "pos": "GK",
-          "photo": "img/joueurs/mestre.webp"
+          "photo": "img/joueurs/mestre.webp?v=2627"
         },
         {
           "id": "arroyo",
           "name": "Diego Arroyo",
           "pos": "GK",
-          "photo": "img/joueurs/arroyo.webp"
+          "photo": "img/joueurs/arroyo.webp?v=2627"
         },
         {
           "id": "javi-navarro",
           "name": "Javi Navarro",
           "pos": "GK",
-          "photo": "img/joueurs/javi-navarro.webp"
+          "photo": "img/joueurs/javi-navarro.webp?v=2627"
         },
         {
           "id": "quetglas",
           "name": "Ferran Quetglas",
           "pos": "GK",
-          "photo": "img/joueurs/quetglas.webp"
+          "photo": "img/joueurs/quetglas.webp?v=2627"
         },
         {
           "id": "fortea",
           "name": "Jesús Fortea",
           "pos": "DEF",
-          "photo": "img/joueurs/fortea.webp"
+          "photo": "img/joueurs/fortea.webp?v=2627"
         },
         {
           "id": "aguado",
           "name": "Diego Aguado",
           "pos": "DEF",
-          "photo": "img/joueurs/aguado.webp"
+          "photo": "img/joueurs/aguado.webp?v=2627"
         },
         {
           "id": "rivas",
           "name": "Mario Rivas",
           "pos": "DEF",
-          "photo": "img/joueurs/rivas.webp"
+          "photo": "img/joueurs/rivas.webp?v=2627"
         },
         {
           "id": "joan",
           "name": "Joan Martínez",
           "short": "Joan",
           "pos": "DEF",
-          "photo": "img/joueurs/joan.webp"
+          "photo": "img/joueurs/joan.webp?v=2627"
         },
         {
           "id": "naasei",
           "name": "Óscar Naasei",
           "pos": "DEF",
-          "photo": "img/joueurs/naasei.webp"
+          "photo": "img/joueurs/naasei.webp?v=2627"
         },
         {
           "id": "lamini",
           "name": "Lamini Fati",
           "short": "Lamini",
           "pos": "DEF",
-          "photo": "img/joueurs/lamini.webp"
+          "photo": "img/joueurs/lamini.webp?v=2627"
         },
         {
           "id": "cestero",
           "name": "Jorge Cestero",
           "pos": "MID",
-          "photo": "img/joueurs/cestero.webp"
+          "photo": "img/joueurs/cestero.webp?v=2627"
         },
         {
           "id": "de-llanos",
           "name": "Hugo de Llanos",
           "short": "De Llanos",
           "pos": "MID",
-          "photo": "img/joueurs/de-llanos.webp"
+          "photo": "img/joueurs/de-llanos.webp?v=2627"
         },
         {
           "id": "fortuny",
           "name": "Pol Fortuny",
           "pos": "MID",
-          "photo": "img/joueurs/fortuny.webp"
+          "photo": "img/joueurs/fortuny.webp?v=2627"
         },
         {
           "id": "leiva",
           "name": "Álvaro Leiva",
           "pos": "MID",
-          "photo": "img/joueurs/leiva.webp"
+          "photo": "img/joueurs/leiva.webp?v=2627"
         },
         {
           "id": "izan",
           "name": "Izan Regueira",
           "short": "Izan",
           "pos": "MID",
-          "photo": "img/joueurs/izan.webp"
+          "photo": "img/joueurs/izan.webp?v=2627"
         },
         {
           "id": "cristian-david",
           "name": "Cristian David Perea",
           "short": "Cristian David",
           "pos": "MID",
-          "photo": "img/joueurs/cristian-david.webp"
+          "photo": "img/joueurs/cristian-david.webp?v=2627"
         },
         {
           "id": "sergio-martinez",
           "name": "Sergio Martínez",
           "pos": "MID",
-          "photo": "img/joueurs/sergio-martinez.webp"
+          "photo": "img/joueurs/sergio-martinez.webp?v=2627"
         },
         {
           "id": "roberto",
           "name": "Roberto Martín",
           "short": "Roberto",
           "pos": "MID",
-          "photo": "img/joueurs/roberto.webp"
+          "photo": "img/joueurs/roberto.webp?v=2627"
         },
         {
           "id": "mesonero",
           "name": "Daniel Mesonero",
           "pos": "MID",
-          "photo": "img/joueurs/mesonero.webp"
+          "photo": "img/joueurs/mesonero.webp?v=2627"
         },
         {
           "id": "yanez",
           "name": "Daniel Yáñez",
           "pos": "ATT",
-          "photo": "img/joueurs/yanez.webp"
+          "photo": "img/joueurs/yanez.webp?v=2627"
         },
         {
           "id": "rachad",
           "name": "Rachad Fettal",
           "short": "Rachad",
           "pos": "ATT",
-          "photo": "img/joueurs/rachad.webp"
+          "photo": "img/joueurs/rachad.webp?v=2627"
         },
         {
           "id": "angel-carvajal",
           "name": "Ángel Carvajal",
           "pos": "ATT",
-          "photo": "img/joueurs/angel-carvajal.webp"
+          "photo": "img/joueurs/angel-carvajal.webp?v=2627"
         }
       ]
     }
@@ -660,16 +660,23 @@
       "name": "Maillot domicile",
       "tag": "Le classique",
       "price": 90,
-      "desc": "Le blanc immaculé du Bernabéu, liseré or et col marine.",
+      "desc": "Le blanc du Bernabéu, col et poignets vert profond, liseré bordeaux sur les épaules.",
       "kit": {
-        "body": "#fdfdfd",
-        "sleeve": "#ffffff",
-        "trim": "#c9a227",
-        "collar": "#13254a",
-        "text": "#13254a",
-        "inner": "#e3e7ef",
+        "body": "#f6f6f3",
+        "sleeve": "#f6f6f3",
+        "collar": "#1e4a40",
+        "collarTrim": "#8f2b45",
+        "cuff": "#1e4a40",
+        "trim": "#1e4a40",
+        "text": "#1e4a40",
+        "inner": "#e2e7e4",
         "neck": "crew",
-        "pattern": "pin"
+        "pattern": "plain",
+        "stripes": {
+          "color": "#8f2b45",
+          "count": 1,
+          "width": 2.6
+        }
       }
     },
     {
@@ -678,16 +685,25 @@
       "name": "Maillot extérieur",
       "tag": "Nouveau",
       "price": 90,
-      "desc": "Bleu nuit profond et détails dorés pour les grands déplacements.",
+      "desc": "Vert sapin à micro-motif pixel, col bordé de blanc avec encoche en V.",
       "kit": {
-        "body": "#152b57",
-        "sleeve": "#0f2148",
-        "trim": "#e2bd55",
-        "collar": "#e2bd55",
-        "text": "#ffffff",
-        "inner": "#0a1630",
-        "neck": "v",
-        "pattern": "diag"
+        "body": "#1f4c45",
+        "sleeve": "#1f4c45",
+        "collar": "#1f4c45",
+        "collarEdge": "#e8efe9",
+        "cuff": "#1f4c45",
+        "cuffEdge": "#e8efe9",
+        "trim": "#e8efe9",
+        "text": "#f2f5f1",
+        "inner": "#123630",
+        "neck": "notch",
+        "pattern": "dots",
+        "dots": "#7fd3c4",
+        "stripes": {
+          "color": "#e8efe9",
+          "count": 1,
+          "width": 1.8
+        }
       }
     },
     {
@@ -696,16 +712,17 @@
       "name": "Maillot third",
       "tag": "Édition spéciale",
       "price": 90,
-      "desc": "Le violet historique du club, réinterprété avec des finitions or.",
+      "desc": "Framboise à facettes géométriques, col en V et poignets crème.",
       "kit": {
-        "body": "#4b2a7a",
-        "sleeve": "#3b2063",
-        "trim": "#e2bd55",
-        "collar": "#e2bd55",
-        "text": "#ffffff",
-        "inner": "#2a1647",
-        "neck": "crew",
-        "pattern": "fade"
+        "body": "#b5466e",
+        "sleeve": "#b5466e",
+        "collar": "#efe5d6",
+        "cuff": "#efe5d6",
+        "trim": "#efe5d6",
+        "text": "#f5ede0",
+        "inner": "#8e3254",
+        "neck": "v",
+        "pattern": "facets"
       }
     },
     {
@@ -714,16 +731,23 @@
       "name": "Maillot gardien",
       "tag": "Dernier rempart",
       "price": 85,
-      "desc": "Vert intense, coupe ajustée : la tenue des gardiens merengues.",
+      "desc": "Bleu ciel, panneaux latéraux plus foncés, col indigo et trois bandes jaunes sur les épaules.",
       "kit": {
-        "body": "#1f7253",
-        "sleeve": "#175a41",
-        "trim": "#a6ecc9",
-        "collar": "#0f3b2b",
-        "text": "#ffffff",
-        "inner": "#0f3b2b",
+        "body": "#38aee0",
+        "sleeve": "#38aee0",
+        "panel": "#2386c0",
+        "collar": "#2c3592",
+        "cuff": "#2c3592",
+        "trim": "#2c3592",
+        "text": "#2c3592",
+        "inner": "#1f6f9c",
         "neck": "crew",
-        "pattern": "bands"
+        "pattern": "panels",
+        "stripes": {
+          "color": "#f3d53a",
+          "count": 3,
+          "width": 2.2
+        }
       }
     },
     {

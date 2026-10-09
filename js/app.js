@@ -58,16 +58,47 @@ const SLEEVES = [
   'M196 26 C208 30 224 34 236 40 L282 82 Q286 86 283 91 L258 128 Q254 132 249 129 L224 112 C220 80 210 52 196 26 Z',
 ];
 
-/* Motif propre à chaque maillot */
+/* Motif propre à chaque maillot (dessiné dans la silhouette, sous les manches) */
 function kitPattern(kit, id) {
   switch (kit.pattern) {
-    case 'pin': return `<g stroke="${kit.text}" stroke-opacity=".07" stroke-width="2">${Array.from({ length: 15 }, (_, i) => `<line x1="${80 + i * 10}" y1="30" x2="${80 + i * 10}" y2="320" />`).join('')}</g>`;
-    case 'diag': return `<g stroke="#fff" stroke-opacity=".06" stroke-width="5">${Array.from({ length: 26 }, (_, i) => `<line x1="${-220 + i * 22}" y1="330" x2="${110 + i * 22}" y2="0" />`).join('')}</g>`;
-    case 'fade': return `<rect width="300" height="330" fill="url(#${id}f)" /><g stroke="${kit.trim}" stroke-opacity=".45" stroke-width="1.5"><line x1="70" y1="262" x2="230" y2="262" /><line x1="70" y1="270" x2="230" y2="270" /></g>`;
-    case 'bands': return `<g fill="#000" fill-opacity=".1">${Array.from({ length: 5 }, (_, i) => `<rect y="${120 + i * 40}" width="300" height="18" />`).join('')}</g>`;
+    // Micro-motif « pixels » sur tout le maillot
+    case 'dots': return `<rect width="300" height="330" fill="url(#${id}d)" />`;
+    // Facettes géométriques, plus claires ou plus sombres
+    case 'facets': {
+      const shades = [['#fff', 0.07], ['#000', 0.04], ['#fff', 0.11], ['#000', 0.07], ['#fff', 0.03]];
+      const tris = [];
+      for (let r = 0; r < 7; r += 1) {
+        for (let c = 0; c < 7; c += 1) {
+          const x = c * 54 - (r % 2) * 27;
+          const y = r * 50;
+          const [fa, oa] = shades[(r * 3 + c * 2) % shades.length];
+          const [fb, ob] = shades[(r * 2 + c * 3 + 1) % shades.length];
+          tris.push(`<polygon points="${x},${y} ${x + 54},${y} ${x + 27},${y + 50}" fill="${fa}" fill-opacity="${oa}" />`);
+          tris.push(`<polygon points="${x + 27},${y + 50} ${x + 81},${y + 50} ${x + 54},${y}" fill="${fb}" fill-opacity="${ob}" />`);
+        }
+      }
+      return `<g>${tris.join('')}</g>`;
+    }
+    // Panneaux latéraux plus foncés, sous les bras
+    case 'panels': return `<g fill="${kit.panel}">
+        <path d="M58 96 C84 150 94 232 88 330 L0 330 L0 96 Z" />
+        <path d="M242 96 C216 150 206 232 212 330 L300 330 L300 96 Z" /></g>`;
     default: return '';
   }
 }
+
+/* Bandes sur les épaules, du col jusqu'à la manche (même tracé, en miroir à droite) */
+function shoulderStripes(kit) {
+  if (!kit.stripes) return '';
+  const { color, count = 1, width = 2.4 } = kit.stripes;
+  const lines = Array.from({ length: count }, (_, i) => `<path d="M101 31 C90 35 76 40 65 46 L20 87" transform="translate(${(i * 3.4).toFixed(1)} ${(i * 3.8).toFixed(1)})" />`).join('');
+  return `<g fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round">${lines}<g transform="matrix(-1 0 0 1 300 0)">${lines}</g></g>`;
+}
+
+/* Trait doublé d'une bordure (col et poignets bordés de blanc, par exemple) */
+const edged = (d, color, edge, width, extra = '') => `
+  ${edge ? `<path d="${d}" fill="none" stroke="${edge}" stroke-width="${width + 4}" ${extra} />` : ''}
+  <path d="${d}" fill="none" stroke="${color}" stroke-width="${width}" ${extra} />`;
 
 function jerseySvg(kit, { view = 'front', name = '', number = '' } = {}) {
   const id = `j${++svgId}`;
@@ -76,13 +107,19 @@ function jerseySvg(kit, { view = 'front', name = '', number = '' } = {}) {
   const outline = `${SHIRT_BODY} ${back ? NECKLINE.back : NECKLINE[vNeck ? 'v' : 'crew']}`;
   const nameSize = name.length > 9 ? 19 : 24;
   const frontNeck = vNeck ? 'L150 70 L196 26' : 'C118 50 182 50 196 26';
-  const collar = back
-    ? `<path d="M106 28 C122 37 178 37 194 28" fill="none" stroke="${kit.collar}" stroke-width="7" stroke-linecap="round" />`
-    : vNeck
-      ? `<path d="M106 28 L150 68 L194 28" fill="none" stroke="${kit.collar}" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" />
-         <path d="M113 34 L150 73 L187 34" fill="none" stroke="${kit.trim}" stroke-width="2" stroke-linejoin="round" />`
-      : `<path d="M106 28 C120 48 180 48 194 28" fill="none" stroke="${kit.collar}" stroke-width="8" stroke-linecap="round" />
-         <path d="M110 35 C124 52 176 52 190 35" fill="none" stroke="${kit.trim}" stroke-width="2" />`;
+  const round = 'stroke-linecap="round" stroke-linejoin="round"';
+  let collar;
+  if (back) {
+    collar = edged('M106 28 C122 37 178 37 194 28', kit.collar, kit.collarEdge, 7, round);
+  } else if (vNeck) {
+    collar = `${edged('M106 28 L150 68 L194 28', kit.collar, kit.collarEdge, 8, round)}
+      ${kit.collarTrim ? `<path d="M113 34 L150 73 L187 34" fill="none" stroke="${kit.collarTrim}" stroke-width="2" ${round} />` : ''}`;
+  } else {
+    // Col rond ; « notch » ajoute la petite encoche en V sous le col
+    collar = `${kit.neck === 'notch' ? `<polygon points="143,45 157,45 150,58" fill="${kit.collarEdge || kit.collar}" />` : ''}
+      ${edged('M106 28 C120 48 180 48 194 28', kit.collar, kit.collarEdge, 8, round)}
+      ${kit.collarTrim ? `<path d="M111 35 C125 51 175 51 189 35" fill="none" stroke="${kit.collarTrim}" stroke-width="2" />` : ''}`;
+  }
   const details = back
     ? `<text x="150" y="106" text-anchor="middle" class="j-name" font-size="${nameSize}" fill="${kit.text}">${esc(name)}</text>
        <text x="150" y="238" text-anchor="middle" class="j-number" fill="${kit.text}" stroke="${kit.trim}" stroke-width="3">${esc(number)}</text>`
@@ -94,14 +131,14 @@ function jerseySvg(kit, { view = 'front', name = '', number = '' } = {}) {
       <defs>
         <clipPath id="${id}c"><path d="${outline}" /></clipPath>
         <clipPath id="${id}k"><circle cx="196" cy="100" r="17" /></clipPath>
+        <pattern id="${id}d" width="7" height="7" patternUnits="userSpaceOnUse">
+          <rect width="2.6" height="2.6" fill="${kit.dots || '#fff'}" fill-opacity=".22" />
+          <rect x="3.5" y="3.5" width="1.6" height="1.6" fill="${kit.dots || '#fff'}" fill-opacity=".08" />
+        </pattern>
         <linearGradient id="${id}g" x1="0" x2="1">
           <stop offset="0" stop-color="#fff" stop-opacity=".16" />
           <stop offset=".5" stop-color="#fff" stop-opacity="0" />
           <stop offset="1" stop-color="#000" stop-opacity=".18" />
-        </linearGradient>
-        <linearGradient id="${id}f" x1="0" y1="0" x2="0" y2="1">
-          <stop offset=".3" stop-color="#000" stop-opacity="0" />
-          <stop offset="1" stop-color="#000" stop-opacity=".38" />
         </linearGradient>
         <radialGradient id="${id}r" cx=".35" cy=".22" r=".75">
           <stop offset="0" stop-color="#fff" stop-opacity=".2" />
@@ -112,10 +149,10 @@ function jerseySvg(kit, { view = 'front', name = '', number = '' } = {}) {
       <path d="${outline}" fill="${kit.body}" />
       <g clip-path="url(#${id}c)">
         ${kitPattern(kit, id)}
-        ${SLEEVES.map((d) => `<path d="${d}" fill="${kit.sleeve}" />`).join('')}
-        <path d="M104 26 C90 52 80 80 76 112 M196 26 C210 52 220 80 224 112" fill="none" stroke="${kit.trim}" stroke-width="3" />
-        <path d="M14 88 L45 134 M286 88 L255 134" stroke="${kit.trim}" stroke-width="9" />
-        <path d="M70 296 Q150 314 230 296" fill="none" stroke="${kit.trim}" stroke-width="8" />
+        ${kit.sleeve !== kit.body || kit.pattern === 'panels' ? SLEEVES.map((d) => `<path d="${d}" fill="${kit.sleeve}" />`).join('') : ''}
+        ${kit.seam ? `<path d="M104 26 C90 52 80 80 76 112 M196 26 C210 52 220 80 224 112" fill="none" stroke="${kit.seam}" stroke-width="2" />` : ''}
+        ${shoulderStripes(kit)}
+        ${edged('M14 88 L45 134 M286 88 L255 134', kit.cuff, kit.cuffEdge, 9)}
         <path d="M76 112 C74 165 72 235 74 300 M224 112 C226 165 228 235 226 300" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="3" />
         <path d="M100 150 Q150 166 200 150 M96 232 Q150 246 204 232" fill="none" stroke="#000" stroke-opacity=".025" stroke-width="10" stroke-linecap="round" />
         <rect width="300" height="330" fill="url(#${id}r)" />
