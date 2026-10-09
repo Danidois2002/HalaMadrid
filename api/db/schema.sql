@@ -1,5 +1,11 @@
 -- Schéma de la base ¡Hala Madrid! (idempotent : peut être rejoué à chaque démarrage)
 
+-- Réglages internes (ex. version des données de départ chargées)
+CREATE TABLE IF NOT EXISTS meta (
+  key   text PRIMARY KEY,
+  value text NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS users (
   id            serial PRIMARY KEY,
   username      text NOT NULL UNIQUE,

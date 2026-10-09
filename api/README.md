@@ -57,14 +57,15 @@ Le site (`index.html`) utilise automatiquement l'API locale quand il est ouvert 
 npm test
 ```
 
-Les 20 tests tournent sur une vraie base PostgreSQL en mémoire, recréée à chaque lancement. Ils couvrent :
+Les 22 tests tournent sur une vraie base PostgreSQL en mémoire, recréée à chaque lancement. Ils couvrent :
 
 - la lecture des données ;
 - la connexion ;
 - les droits admin et démo, et l'expiration des ajouts du compte démo ;
 - le calcul des commandes ;
 - les erreurs de validation ;
-- la limite de tentatives de connexion.
+- la limite de tentatives de connexion ;
+- le rechargement des données de départ quand leur version change.
 
 Ils sont aussi lancés par GitHub Actions à chaque modification du dossier `api/`.
 
@@ -76,7 +77,7 @@ Ils sont aussi lancés par GitHub Actions à chaque modification du dossier `api
    - `ADMIN_PASSWORD` : le mot de passe du compte admin privé.
 
    `JWT_SECRET` est généré automatiquement.
-3. Au premier démarrage, l'API crée les tables et remplit la base.
+3. Au premier démarrage, l'API crée les tables et remplit la base. Ensuite, à chaque changement de `DATA_VERSION` dans `js/data.js` (puis `node scripts/export-seed.js`), elle recharge le contenu du club : équipes, effectifs, actualités et produits. Les ajouts faits depuis l'espace admin sont conservés.
 4. Mettre l'adresse de l'API (`https://….onrender.com`) dans `js/config.js`, puis pousser sur GitHub.
 
 Sur l'offre gratuite de Render, l'API se met en veille après 15 minutes sans visite : le premier appel peut prendre jusqu'à une minute. Le site s'affiche tout de suite avec les données de `js/data.js`, puis passe sur celles de l'API quand elle répond.
@@ -96,7 +97,7 @@ api/
 │   └── routes/          # auth, contenus (équipes, actualités, produits), commandes
 ├── db/
 │   ├── schema.sql       # tables, contraintes et index
-│   └── seed-data.json   # données de départ (générées depuis js/data.js)
+│   └── seed-data.json   # données de départ versionnées (générées depuis js/data.js)
 ├── scripts/export-seed.js
 └── test/api.test.js
 ```

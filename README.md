@@ -43,7 +43,7 @@ Projet étudiant entièrement repensé : un front en HTML, CSS et JavaScript nat
 
 - **Navigation par écrans** dans une seule page (`#/equipes/feminine`, `#/boutique/domicile`…)
 - **Maillots 100 % SVG** générés en JavaScript : silhouette, motifs, couleurs et flocage changent selon le produit et les choix de l'utilisateur
-- **API REST** (Node.js, Express, PostgreSQL) : connexion par jeton JWT, rôles admin et démo, validation des données, commandes enregistrées en transaction, 20 tests automatisés. Détails dans [api/README.md](api/README.md)
+- **API REST** (Node.js, Express, PostgreSQL) : connexion par jeton JWT, rôles admin et démo, validation des données, commandes enregistrées en transaction, 22 tests automatisés. Détails dans [api/README.md](api/README.md)
 - **Toujours affiché** : le site s'ouvre tout de suite avec les données de `js/data.js`, puis passe sur celles de l'API dès qu'elle répond. Sans serveur, il fonctionne seul (stockage du navigateur, compte `admin` / `admin123`)
 - **Panier sauvegardé dans le navigateur** (`localStorage`)
 - **Accessibilité** : navigation au clavier, `<dialog>` natif, `aria-current` et `aria-pressed`, réglage « réduire les animations » respecté
@@ -81,7 +81,7 @@ HalaMadrid/
 
 ## ⚠️ Mentions
 
-Projet étudiant **non officiel**, sans lien avec le Real Madrid C.F. Les noms, logos et photos appartiennent à leurs propriétaires respectifs. Les effectifs sont ceux de la saison 2023-24. La boutique est une démonstration : aucun paiement n'est demandé et aucune commande n'est livrée.
+Projet étudiant **non officiel**, sans lien avec le Real Madrid C.F. Les noms, logos et photos appartiennent à leurs propriétaires respectifs. Les effectifs, le staff et les actualités sont ceux de la saison 2026-27 (d’après realmadrid.com, octobre 2026). La boutique est une démonstration : aucun paiement n'est demandé et aucune commande n'est livrée.
 
 ---
 

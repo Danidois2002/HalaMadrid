@@ -30,6 +30,7 @@ const isAdmin = () => {
 const canDelete = (item) => isAdmin() && (!api.enabled || site.user.role === 'admin' || item.createdBy === site.user.id);
 const demoLogin = api.enabled ? { username: 'demo', password: 'halamadrid' } : { username: 'admin', password: 'admin123' };
 const dateFormat = new Intl.DateTimeFormat('fr-BE', { dateStyle: 'short', timeStyle: 'short' });
+const dayFormat = new Intl.DateTimeFormat('fr-BE', { day: 'numeric', month: 'long', year: 'numeric' });
 
 /* ---------- Petites aides d'interface ---------- */
 let toastTimer;
@@ -203,7 +204,10 @@ function newsCard(item) {
     <article class="news-card reveal">
       <div class="news-media">${item.img ? `<img src="${item.img}" alt="" loading="lazy" />` : '<span class="news-fallback"><img src="img/crest.webp" alt="" /></span>'}</div>
       <div class="news-body">
-        <span class="pill">${esc(item.cat)}</span>
+        <div class="news-meta">
+          <span class="pill">${esc(item.cat)}</span>
+          ${item.date || item.publishedAt ? `<time datetime="${esc(item.date || item.publishedAt)}">${dayFormat.format(new Date(item.date || item.publishedAt))}</time>` : ''}
+        </div>
         <h3>${esc(item.title)}</h3>
       </div>
       ${canDelete(item) ? `<button class="admin-remove" type="button" data-remove-news="${esc(item.id)}" aria-label="Supprimer l'actualité ${esc(item.title)}">×</button>` : ''}
@@ -435,7 +439,7 @@ function viewNews() {
       <div class="container">
         <p class="kicker">Actualités</p>
         <h1>Toute l'actualité merengue</h1>
-        <p class="page-lead">Transferts, matchs, équipe féminine et grands souvenirs du club.</p>
+        <p class="page-lead">Matchs, vie du groupe, récompenses et internationaux : la saison 2026-27 au jour le jour.</p>
       </div>
     </section>
     <section class="section section-tight">

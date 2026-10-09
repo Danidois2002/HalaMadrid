@@ -1,6 +1,9 @@
 /* =========================================================
-   Données du site (effectifs 2023-24 du projet d'origine)
+   Données du site : saison 2026-27 (effectifs, staff et actualités d'après realmadrid.com, octobre 2026)
    ========================================================= */
+
+/* Version des données de départ : à changer quand on modifie ce fichier, pour que l'API les recharge */
+const DATA_VERSION = '2026-27.1';
 
 const POSITIONS = {
   GK: { label: 'Gardien', labelF: 'Gardienne', plural: 'Gardiens' },
@@ -13,97 +16,123 @@ const TEAMS = {
   masculine: {
     name: 'Équipe première masculine',
     short: 'Masculine',
-    season: 'Effectif 2023-24',
+    season: 'Effectif 2026-27',
     feminine: false,
     photo: 'img/equipes/senior.webp',
     intro: "Quinze fois championne d'Europe, l'équipe première porte l'héritage du meilleur club du XXᵉ siècle.",
     staff: [
       { name: 'Florentino Pérez', role: 'Président du club', photo: 'img/staff/florentino.webp' },
-      { name: 'Carlo Ancelotti', role: 'Entraîneur', photo: 'img/staff/ancelotti.webp' },
+      { name: 'José Mourinho', role: 'Entraîneur', photo: 'img/staff/mourinho.webp' },
     ],
     players: [
       { id: 'courtois', name: 'Thibaut Courtois', pos: 'GK', photo: 'img/joueurs/courtois.webp' },
-      { id: 'kepa', name: 'Kepa Arrizabalaga', short: 'Kepa', pos: 'GK', photo: 'img/joueurs/kepa.webp' },
-      { id: 'carvajal', name: 'Daniel Carvajal', pos: 'DEF', photo: 'img/joueurs/carvajal.webp' },
+      { id: 'lunin', name: 'Andriy Lunin', pos: 'GK', photo: 'img/joueurs/lunin.webp' },
+      { id: 'asencio', name: 'Raúl Asencio', pos: 'DEF', photo: 'img/joueurs/asencio.webp' },
       { id: 'militao', name: 'Éder Militão', pos: 'DEF', photo: 'img/joueurs/militao.webp' },
-      { id: 'alaba', name: 'David Alaba', pos: 'DEF', photo: 'img/joueurs/alaba.webp' },
+      { id: 'huijsen', name: 'Dean Huijsen', pos: 'DEF', photo: 'img/joueurs/huijsen.webp' },
+      { id: 'trent', name: 'Trent Alexander-Arnold', short: 'Trent', pos: 'DEF', photo: 'img/joueurs/trent.webp' },
+      { id: 'konate', name: 'Ibrahima Konaté', pos: 'DEF', photo: 'img/joueurs/konate.webp' },
+      { id: 'cucurella', name: 'Marc Cucurella', pos: 'DEF', photo: 'img/joueurs/cucurella.webp' },
       { id: 'rudiger', name: 'Antonio Rüdiger', pos: 'DEF', photo: 'img/joueurs/rudiger.webp' },
       { id: 'mendy', name: 'Ferland Mendy', pos: 'DEF', photo: 'img/joueurs/mendy.webp' },
+      { id: 'dumfries', name: 'Denzel Dumfries', pos: 'DEF', photo: 'img/joueurs/dumfries.webp' },
+      { id: 'bellingham', name: 'Jude Bellingham', pos: 'MID', photo: 'img/joueurs/bellingham.webp' },
       { id: 'camavinga', name: 'Eduardo Camavinga', pos: 'MID', photo: 'img/joueurs/camavinga.webp' },
-      { id: 'modric', name: 'Luka Modrić', pos: 'MID', photo: 'img/joueurs/modric.webp' },
-      { id: 'kroos', name: 'Toni Kroos', pos: 'MID', photo: 'img/joueurs/kroos.webp' },
-      { id: 'tchouameni', name: 'Aurélien Tchouaméni', pos: 'MID', photo: 'img/joueurs/tchouameni.webp' },
       { id: 'valverde', name: 'Federico Valverde', pos: 'MID', photo: 'img/joueurs/valverde.webp' },
-      { id: 'bellingham', name: 'Jude Bellingham', pos: 'ATT', photo: 'img/joueurs/bellingham.webp' },
-      { id: 'rodrygo', name: 'Rodrygo Goes', short: 'Rodrygo', pos: 'ATT', photo: 'img/joueurs/rodrygo.webp' },
+      { id: 'tchouameni', name: 'Aurélien Tchouaméni', pos: 'MID', photo: 'img/joueurs/tchouameni.webp' },
+      { id: 'guler', name: 'Arda Güler', pos: 'MID', photo: 'img/joueurs/guler.webp' },
+      { id: 'bernardo', name: 'Bernardo Silva', short: 'Bernardo', pos: 'MID', photo: 'img/joueurs/bernardo.webp' },
+      { id: 'thiago', name: 'Thiago Pitarch', short: 'Thiago', pos: 'MID', photo: 'img/joueurs/thiago.webp' },
+      { id: 'brahim', name: 'Brahim Díaz', short: 'Brahim', pos: 'ATT', photo: 'img/joueurs/brahim.webp' },
       { id: 'vinicius', name: 'Vinícius Jr.', short: 'Vinícius', pos: 'ATT', photo: 'img/joueurs/vinicius.webp' },
+      { id: 'endrick', name: 'Endrick', pos: 'ATT', photo: 'img/joueurs/endrick.webp' },
+      { id: 'mbappe', name: 'Kylian Mbappé', pos: 'ATT', photo: 'img/joueurs/mbappe.webp' },
+      { id: 'rodrygo', name: 'Rodrygo Goes', short: 'Rodrygo', pos: 'ATT', photo: 'img/joueurs/rodrygo.webp' },
+      { id: 'espi', name: 'Carlos Espí', pos: 'ATT', photo: 'img/joueurs/espi.webp' },
+      { id: 'diomande', name: 'Yan Diomande', pos: 'ATT', photo: 'img/joueurs/diomande.webp' },
     ],
     // Onze type en 4-3-3 (identifiants des joueurs, de l'arrière vers l'avant ; dans chaque ligne, de gauche à droite sur le terrain)
-    lineup: { GK: ['courtois'], DEF: ['mendy', 'militao', 'rudiger', 'carvajal'], MID: ['valverde', 'tchouameni', 'kroos'], ATT: ['vinicius', 'bellingham', 'rodrygo'] },
+    lineup: { GK: ['courtois'], DEF: ['cucurella', 'huijsen', 'konate', 'trent'], MID: ['guler', 'tchouameni', 'valverde'], ATT: ['vinicius', 'mbappe', 'diomande'] },
   },
   feminine: {
     name: 'Équipe première féminine',
     short: 'Féminine',
-    season: 'Effectif 2023-24',
+    season: 'Effectif 2026-27',
     feminine: true,
     photo: 'img/equipes/seniorfemme.webp',
     intro: "Une équipe ambitieuse qui fait grandir le football féminin sous le maillot blanc.",
     staff: [
       { name: 'Florentino Pérez', role: 'Président du club', photo: 'img/staff/florentino.webp' },
-      { name: 'Alberto Toril', role: 'Entraîneur', photo: 'img/staff/alberto.webp' },
+      { name: 'Pau Quesada', role: 'Entraîneur', photo: 'img/staff/quesada.webp' },
     ],
     players: [
-      { id: 'misa', name: 'Misa Rodríguez', short: 'Misa', pos: 'GK', photo: 'img/joueurs/misa.webp' },
-      { id: 'mylene', name: 'Mylène Chavas', pos: 'GK', photo: 'img/joueurs/mylene.webp' },
-      { id: 'kenti', name: 'Kenti Robles', pos: 'DEF', photo: 'img/joueurs/kenti.webp' },
-      { id: 'rocui', name: 'Rocui Luna', pos: 'DEF', photo: 'img/joueurs/rocui.webp' },
-      { id: 'ivana', name: 'Ivana Sanz', pos: 'DEF', photo: 'img/joueurs/ivana.webp' },
-      { id: 'kathellen', name: 'Kathellen Sousa', pos: 'DEF', photo: 'img/joueurs/kathellen.webp' },
-      { id: 'sofia', name: 'Sofia Svana', pos: 'DEF', photo: 'img/joueurs/sofia.webp' },
-      { id: 'teresa', name: 'Teresa Abelleira', pos: 'MID', photo: 'img/joueurs/teresa.webp' },
-      { id: 'sandie', name: 'Sandie Toletti', pos: 'MID', photo: 'img/joueurs/sandie.webp' },
-      { id: 'maite', name: 'Maite Areta', pos: 'MID', photo: 'img/joueurs/maite.webp' },
-      { id: 'caroline', name: 'Caroline Weir', pos: 'MID', photo: 'img/joueurs/caroline.webp' },
+      { id: 'frohms', name: 'Merle Frohms', pos: 'GK', photo: 'img/joueurs/frohms.webp' },
+      { id: 'laia', name: 'Laia López', short: 'Laia', pos: 'GK', photo: 'img/joueurs/laia.webp' },
+      { id: 'noe', name: 'Noemí Bejarano', short: 'Noe', pos: 'DEF', photo: 'img/joueurs/noe.webp' },
+      { id: 'levels', name: 'Janou Levels', pos: 'DEF', photo: 'img/joueurs/levels.webp' },
+      { id: 'cristobal', name: 'Silvia Cristóbal', pos: 'DEF', photo: 'img/joueurs/cristobal.webp' },
+      { id: 'mendez', name: 'María Méndez', pos: 'DEF', photo: 'img/joueurs/mendez.webp' },
+      { id: 'holmgaard', name: 'Sara Holmgaard', pos: 'DEF', photo: 'img/joueurs/holmgaard.webp' },
+      { id: 'andersson', name: 'Bella Andersson', pos: 'DEF', photo: 'img/joueurs/andersson.webp' },
+      { id: 'lakrar', name: 'Maëlle Lakrar', pos: 'DEF', photo: 'img/joueurs/lakrar.webp' },
+      { id: 'toletti', name: 'Sandie Toletti', pos: 'MID', photo: 'img/joueurs/toletti.webp' },
+      { id: 'dabritz', name: 'Sara Däbritz', pos: 'MID', photo: 'img/joueurs/dabritz.webp' },
+      { id: 'irune', name: 'Irune Dorado', short: 'Irune', pos: 'MID', photo: 'img/joueurs/irune.webp' },
+      { id: 'angeldahl', name: 'Filippa Angeldahl', pos: 'MID', photo: 'img/joueurs/angeldahl.webp' },
+      { id: 'andreia', name: 'Andreia Jacinto', pos: 'MID', photo: 'img/joueurs/andreia.webp' },
+      { id: 'elisa', name: 'Elisa Senß', short: 'Elisa', pos: 'MID', photo: 'img/joueurs/elisa.webp' },
+      { id: 'caruso', name: 'Arianna Caruso', pos: 'MID', photo: 'img/joueurs/caruso.webp' },
+      { id: 'navarro', name: 'Eva Navarro', pos: 'ATT', photo: 'img/joueurs/navarro.webp' },
+      { id: 'comendador', name: 'Paula Comendador', pos: 'ATT', photo: 'img/joueurs/comendador.webp' },
+      { id: 'keukelaar', name: 'Lotte Keukelaar', pos: 'ATT', photo: 'img/joueurs/keukelaar.webp' },
+      { id: 'bruun', name: 'Signe Bruun', pos: 'ATT', photo: 'img/joueurs/bruun.webp' },
       { id: 'athenea', name: 'Athenea del Castillo', short: 'Athenea', pos: 'ATT', photo: 'img/joueurs/athenea.webp' },
-      { id: 'naomie', name: 'Naomie Feller', pos: 'ATT', photo: 'img/joueurs/naomie.webp' },
-      { id: 'carla', name: 'Carla Camacho', pos: 'ATT', photo: 'img/joueurs/carla.webp' },
-      { id: 'hayley', name: 'Hayley Raso', pos: 'ATT', photo: 'img/joueurs/hayley.webp' },
+      { id: 'beerensteyn', name: 'Lineth Beerensteyn', pos: 'ATT', photo: 'img/joueurs/beerensteyn.webp' },
+      { id: 'schroder', name: 'Felicia Schröder', pos: 'ATT', photo: 'img/joueurs/schroder.webp' },
+      { id: 'linda', name: 'Linda Caicedo', short: 'Linda', pos: 'ATT', photo: 'img/joueurs/linda.webp' },
     ],
-    lineup: { GK: ['misa'], DEF: ['sofia', 'ivana', 'kathellen', 'kenti'], MID: ['teresa', 'sandie', 'caroline'], ATT: ['hayley', 'naomie', 'athenea'] },
+    lineup: { GK: ['frohms'], DEF: ['cristobal', 'andersson', 'lakrar', 'navarro'], MID: ['andreia', 'elisa', 'caruso'], ATT: ['linda', 'schroder', 'athenea'] },
   },
   academie: {
     name: 'Académie · Real Madrid Castilla',
     short: 'Académie',
-    season: 'Effectif 2023-24',
+    season: 'Effectif 2026-27',
     feminine: false,
     photo: 'img/equipes/castilla.webp',
     intro: "La Fábrica, l'école du club : ici se forment les talents qui rêvent du Bernabéu.",
     staff: [
       { name: 'Florentino Pérez', role: 'Président du club', photo: 'img/staff/florentino.webp' },
-      { name: 'Raúl González', role: 'Entraîneur', photo: 'img/staff/raul.webp' },
+      { name: 'Julián López de Lerma', role: 'Entraîneur', photo: 'img/staff/lopez-de-lerma.webp' },
     ],
     players: [
-      { id: 'conchello', name: 'Luca Conchello', pos: 'GK' },
-      { id: 'pinero', name: 'Diego Pinero', pos: 'GK' },
-      { id: 'antonin', name: 'Marvelous Antonin', pos: 'DEF' },
-      { id: 'augusto', name: 'Vinicius Augusto', pos: 'DEF' },
-      { id: 'carillo', name: 'Alvaro Carillo', pos: 'DEF' },
-      { id: 'herrera', name: 'Lorenzo Herrera', pos: 'DEF' },
-      { id: 'pontorreal', name: 'Edgar Pontorreal', pos: 'DEF' },
-      { id: 'angel', name: 'Manuel Angel', pos: 'MID' },
-      { id: 'camona', name: 'Peter Camona', pos: 'MID' },
-      { id: 'fernandez', name: 'Theo Fernandez', pos: 'MID' },
-      { id: 'paz', name: 'Nico Paz', pos: 'MID' },
-      { id: 'torres', name: 'Gonzalo Torres', pos: 'MID' },
-      { id: 'bravo', name: 'Iker Bravo', pos: 'ATT' },
-      { id: 'lopez', name: 'Noel Lopez', pos: 'ATT' },
-      { id: 'manoz', name: 'Alvaro Manoz', pos: 'ATT' },
+      { id: 'mestre', name: 'Sergio Mestre', pos: 'GK', photo: 'img/joueurs/mestre.webp' },
+      { id: 'arroyo', name: 'Diego Arroyo', pos: 'GK', photo: 'img/joueurs/arroyo.webp' },
+      { id: 'javi-navarro', name: 'Javi Navarro', pos: 'GK', photo: 'img/joueurs/javi-navarro.webp' },
+      { id: 'quetglas', name: 'Ferran Quetglas', pos: 'GK', photo: 'img/joueurs/quetglas.webp' },
+      { id: 'fortea', name: 'Jesús Fortea', pos: 'DEF', photo: 'img/joueurs/fortea.webp' },
+      { id: 'aguado', name: 'Diego Aguado', pos: 'DEF', photo: 'img/joueurs/aguado.webp' },
+      { id: 'rivas', name: 'Mario Rivas', pos: 'DEF', photo: 'img/joueurs/rivas.webp' },
+      { id: 'joan', name: 'Joan Martínez', short: 'Joan', pos: 'DEF', photo: 'img/joueurs/joan.webp' },
+      { id: 'naasei', name: 'Óscar Naasei', pos: 'DEF', photo: 'img/joueurs/naasei.webp' },
+      { id: 'lamini', name: 'Lamini Fati', short: 'Lamini', pos: 'DEF', photo: 'img/joueurs/lamini.webp' },
+      { id: 'cestero', name: 'Jorge Cestero', pos: 'MID', photo: 'img/joueurs/cestero.webp' },
+      { id: 'de-llanos', name: 'Hugo de Llanos', short: 'De Llanos', pos: 'MID', photo: 'img/joueurs/de-llanos.webp' },
+      { id: 'fortuny', name: 'Pol Fortuny', pos: 'MID', photo: 'img/joueurs/fortuny.webp' },
+      { id: 'leiva', name: 'Álvaro Leiva', pos: 'MID', photo: 'img/joueurs/leiva.webp' },
+      { id: 'izan', name: 'Izan Regueira', short: 'Izan', pos: 'MID', photo: 'img/joueurs/izan.webp' },
+      { id: 'cristian-david', name: 'Cristian David Perea', short: 'Cristian David', pos: 'MID', photo: 'img/joueurs/cristian-david.webp' },
+      { id: 'sergio-martinez', name: 'Sergio Martínez', pos: 'MID', photo: 'img/joueurs/sergio-martinez.webp' },
+      { id: 'roberto', name: 'Roberto Martín', short: 'Roberto', pos: 'MID', photo: 'img/joueurs/roberto.webp' },
+      { id: 'mesonero', name: 'Daniel Mesonero', pos: 'MID', photo: 'img/joueurs/mesonero.webp' },
+      { id: 'yanez', name: 'Daniel Yáñez', pos: 'ATT', photo: 'img/joueurs/yanez.webp' },
+      { id: 'rachad', name: 'Rachad Fettal', short: 'Rachad', pos: 'ATT', photo: 'img/joueurs/rachad.webp' },
+      { id: 'angel-carvajal', name: 'Ángel Carvajal', pos: 'ATT', photo: 'img/joueurs/angel-carvajal.webp' },
     ],
-    lineup: { GK: ['conchello'], DEF: ['herrera', 'augusto', 'carillo', 'antonin'], MID: ['paz', 'fernandez', 'angel'], ATT: ['manoz', 'lopez', 'bravo'] },
+    lineup: { GK: ['mestre'], DEF: ['aguado', 'rivas', 'naasei', 'fortea'], MID: ['fortuny', 'cestero', 'sergio-martinez'], ATT: ['leiva', 'angel-carvajal', 'yanez'] },
   },
 };
 
-/* Palmarès (fin 2024) */
+/* Palmarès (octobre 2026) */
 const HONOURS = [
   { value: 15, label: 'Ligues des champions' },
   { value: 36, label: 'Championnats d’Espagne' },
@@ -111,17 +140,18 @@ const HONOURS = [
   { value: 6, label: 'Supercoupes d’Europe' },
 ];
 
-const NEWS_CATEGORIES = ['Transferts', 'Équipe', 'Matchs', 'Féminine', 'Histoire'];
+const NEWS_CATEGORIES = ['Matchs', 'Équipe', 'Récompenses', 'Sélections'];
+/* Actualités, de la plus récente à la plus ancienne */
 const NEWS = [
-  { id: 'mbappe', title: 'Mbappé au Real Madrid ?', cat: 'Transferts', img: 'img/actus/mbappe.webp' },
-  { id: 'alaba', title: 'Alaba blessé pour la saison', cat: 'Équipe', img: 'img/actus/alaba.webp' },
-  { id: 'ronaldo', title: 'En souvenir du but de Ronaldo', cat: 'Histoire', img: 'img/actus/ronaldo.webp' },
-  { id: 'feminine', title: "L'équipe féminine remporte la coupe", cat: 'Féminine', img: 'img/actus/femme.webp' },
-  { id: 'alaves', title: 'Real Madrid – Alavés', cat: 'Matchs', img: 'img/actus/match.webp' },
-  { id: 'modric', title: 'Modrić en grande forme', cat: 'Équipe', img: 'img/actus/modric.webp' },
-  { id: 'osimhen', title: 'Osimhen vers le Real Madrid ?', cat: 'Transferts', img: 'img/actus/osimhen.webp' },
-  { id: 'endrick', title: 'Endrick a signé !', cat: 'Transferts', img: 'img/actus/endrick.webp' },
-  { id: 'rodrygo', title: 'Rodrygo marque deux fois face à Valence', cat: 'Matchs', img: 'img/actus/rodrygo.webp' },
+  { id: 'convocation-villarreal', title: 'Real Madrid-Villarreal : la liste des convoqués', cat: 'Matchs', date: '2026-10-09', img: 'img/actus/convocation-villarreal.webp' },
+  { id: 'mourinho-villarreal', title: 'Mourinho : « Nous devons prendre les points » contre Villarreal', cat: 'Matchs', date: '2026-10-09', img: 'img/actus/mourinho-villarreal.webp' },
+  { id: 'entrainement-villarreal', title: 'Dernier entraînement avant de recevoir Villarreal', cat: 'Équipe', date: '2026-10-09', img: 'img/actus/entrainement-villarreal.webp' },
+  { id: 'guler-cinq-etoiles', title: 'Arda Güler, joueur Cinq Étoiles Mahou de septembre', cat: 'Récompenses', date: '2026-10-08', img: 'img/actus/guler-cinq-etoiles.webp' },
+  { id: 'mourinho-asencio', title: 'Mourinho rend visite à Asencio après son opération', cat: 'Équipe', date: '2026-10-01', img: 'img/actus/mourinho-asencio.webp' },
+  { id: 'selections', title: 'Quatorze madridistas appelés en sélection', cat: 'Sélections', date: '2026-09-21', img: 'img/actus/selections.webp' },
+  { id: 'victoire-rayo', title: '4-1 contre le Rayo : large victoire avec un doublé de Mbappé', cat: 'Matchs', date: '2026-09-12', img: 'img/actus/victoire-rayo.webp' },
+  { id: 'mbappe-meilleur-buteur', title: 'Mbappé reçoit le trophée de meilleur buteur de la Ligue des champions', cat: 'Récompenses', date: '2026-09-08', img: 'img/actus/mbappe-meilleur-buteur.webp' },
+  { id: 'courtois-ballon-or', title: "Courtois en lice pour le trophée du meilleur gardien du Ballon d'Or", cat: 'Récompenses', date: '2026-09-08', img: 'img/actus/courtois-ballon-or.webp' },
 ];
 
 /* Boutique : les maillots sont dessinés en SVG (voir jerseySvg dans app.js) */
@@ -153,13 +183,15 @@ const PRODUCTS = [
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 const FLOCAGE_PRICE = 15;
 
-/* Joueurs proposés pour le flocage (numéros de la saison 2023-24) */
+/* Joueurs proposés pour le flocage (numéros de la saison 2026-27) */
 const FLOCAGE_PLAYERS = [
-  { name: 'COURTOIS', number: 1 }, { name: 'CARVAJAL', number: 2 }, { name: 'MILITÃO', number: 3 },
-  { name: 'ALABA', number: 4 }, { name: 'BELLINGHAM', number: 5 }, { name: 'VINI JR.', number: 7 },
-  { name: 'KROOS', number: 8 }, { name: 'MODRIĆ', number: 10 }, { name: 'RODRYGO', number: 11 },
-  { name: 'CAMAVINGA', number: 12 }, { name: 'VALVERDE', number: 15 }, { name: 'TCHOUAMÉNI', number: 18 },
-  { name: 'RÜDIGER', number: 22 }, { name: 'MENDY', number: 23 }, { name: 'KEPA', number: 25 },
+  { name: 'COURTOIS', number: 1 }, { name: 'ASENCIO', number: 2 }, { name: 'MILITÃO', number: 3 },
+  { name: 'HUIJSEN', number: 4 }, { name: 'BELLINGHAM', number: 5 }, { name: 'CAMAVINGA', number: 6 },
+  { name: 'VINI JR.', number: 7 }, { name: 'VALVERDE', number: 8 }, { name: 'ENDRICK', number: 9 },
+  { name: 'MBAPPÉ', number: 10 }, { name: 'RODRYGO', number: 11 }, { name: 'TRENT', number: 12 },
+  { name: 'TCHOUAMÉNI', number: 14 }, { name: 'ARDA GÜLER', number: 15 }, { name: 'KONATÉ', number: 16 },
+  { name: 'CUCURELLA', number: 17 }, { name: 'BERNARDO', number: 20 }, { name: 'BRAHIM', number: 21 },
+  { name: 'RÜDIGER', number: 22 }, { name: 'DUMFRIES', number: 24 }, { name: 'DIOMANDE', number: 25 },
 ];
 
 const CLUB = {

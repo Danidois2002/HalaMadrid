@@ -5,7 +5,7 @@ import request from 'supertest';
 import { createApp } from '../src/app.js';
 import { loadConfig } from '../src/config.js';
 import { connect } from '../src/db.js';
-import { DEMO_ACCOUNT, setupDatabase } from '../src/setup.js';
+import { DEMO_ACCOUNT, seedData, setupDatabase } from '../src/setup.js';
 
 const ADMIN = { username: 'admin', password: 'mot-de-passe-de-test' };
 let db;
@@ -30,8 +30,9 @@ describe('lecture publique', () => {
     const { body } = await api.get('/api/teams').expect(200);
     assert.deepEqual(body.map((t) => t.id), ['masculine', 'feminine', 'academie']);
     const men = body[0];
-    assert.equal(men.players.length, 15);
-    assert.deepEqual(men.lineup.ATT, ['vinicius', 'bellingham', 'rodrygo']);
+    assert.equal(men.players.length, 25);
+    assert.deepEqual(men.lineup.ATT, ['vinicius', 'mbappe', 'diomande']);
+    assert.equal(men.staff[1].name, 'José Mourinho');
   });
 
   test('équipe inconnue : 404', async () => {
@@ -46,7 +47,8 @@ describe('lecture publique', () => {
 
   test('actualités de la plus récente à la plus ancienne', async () => {
     const { body } = await api.get('/api/news').expect(200);
-    assert.equal(body[0].id, 'mbappe');
+    assert.equal(body[0].id, 'convocation-villarreal');
+    assert.equal(body.at(-1).id, 'courtois-ballon-or');
   });
 });
 
@@ -86,15 +88,15 @@ describe('droits admin et démo', () => {
     const { body: created } = await api.post('/api/news').set(auth).send({ title: 'Victoire au Bernabéu', cat: 'Matchs' }).expect(201);
     const { body: news } = await api.get('/api/news');
     assert.equal(news[0].id, created.id);
-    await api.delete('/api/news/mbappe').set(auth).expect(403);
+    await api.delete('/api/news/convocation-villarreal').set(auth).expect(403);
     await api.delete(`/api/news/${created.id}`).set(auth).expect(204);
   });
 
   test("l'admin supprime n'importe quelle actualité", async () => {
     const token = await tokenFor(ADMIN);
-    await api.delete('/api/news/alaba').set('Authorization', `Bearer ${token}`).expect(204);
+    await api.delete('/api/news/courtois-ballon-or').set('Authorization', `Bearer ${token}`).expect(204);
     const { body } = await api.get('/api/news');
-    assert.ok(!body.some((n) => n.id === 'alaba'));
+    assert.ok(!body.some((n) => n.id === 'courtois-ballon-or'));
   });
 
   test("ajout et retrait d'un joueur", async () => {
@@ -103,7 +105,7 @@ describe('droits admin et démo', () => {
     const { body: player } = await api.post('/api/teams/academie/players').set(auth).send({ name: 'Nouveau Talent', pos: 'MID' }).expect(201);
     const { body: team } = await api.get('/api/teams/academie');
     assert.ok(team.players.some((p) => p.id === player.id));
-    await api.delete('/api/players/kroos').set(auth).expect(403);
+    await api.delete('/api/players/valverde').set(auth).expect(403);
     await api.delete(`/api/players/${player.id}`).set(auth).expect(204);
   });
 
@@ -146,6 +148,34 @@ describe('commandes', () => {
     const { body } = await api.get('/api/orders').set('Authorization', `Bearer ${token}`).expect(200);
     assert.equal(body.stats.count, 2);
     assert.equal(body.orders[0].items[0].name, 'Ballon d’entraînement');
+  });
+});
+
+describe('mise à jour des données de départ', () => {
+  test('même version : rien n’est rechargé (une suppression admin reste faite)', async () => {
+    await setupDatabase(db, loadConfig({}));
+    const { body } = await api.get('/api/news');
+    assert.ok(!body.some((n) => n.id === 'courtois-ballon-or'));
+  });
+
+  test('nouvelle version : le contenu du club est remplacé, les ajouts admin sont gardés', async () => {
+    const token = await tokenFor(ADMIN);
+    const { body: added } = await api.post('/api/news').set('Authorization', `Bearer ${token}`)
+      .send({ title: 'Annonce ajoutée par l’admin', cat: 'Équipe' }).expect(201);
+    const next = {
+      ...seedData,
+      version: 'test-2',
+      news: [{ id: 'nouvelle', title: 'Nouvelle saison', cat: 'Matchs', date: '2027-08-01', img: '' }],
+      teams: seedData.teams.map((t) => (t.id === 'masculine' ? { ...t, season: 'Effectif 2027-28' } : t)),
+    };
+    await setupDatabase(db, loadConfig({}), next);
+    const { body: news } = await api.get('/api/news');
+    assert.deepEqual(news.map((n) => n.id).sort(), [added.id, 'nouvelle'].sort());
+    const { body: men } = await api.get('/api/teams/masculine');
+    assert.equal(men.season, 'Effectif 2027-28');
+    // les commandes passées restent valides : les produits ne sont jamais supprimés
+    const { body: orders } = await api.get('/api/orders').set('Authorization', `Bearer ${token}`).expect(200);
+    assert.equal(orders.stats.count, 2);
   });
 });
 

@@ -147,6 +147,8 @@ p { margin: 0; }
 .news-fallback img { width: 26% !important; height: auto !important; object-fit: contain !important; background: #fff; border-radius: 50%; padding: 8%; }
 .news-body { flex: 1; display: grid; align-content: start; gap: .7rem; padding: 1.2rem 1.3rem 1.5rem; }
 .news-body h3 { font-size: 1.6rem; }
+.news-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .7rem; }
+.news-meta time { color: var(--muted); font-size: .85rem; }
 
 /* Équipes (accueil) */
 .teams-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }

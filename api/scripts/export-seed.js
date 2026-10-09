@@ -1,13 +1,15 @@
-/* Exporte les données du site (js/data.js) vers db/seed-data.json, utilisé pour remplir une base vide.
+/* Exporte les données du site (js/data.js) vers db/seed-data.json : l'API les charge au premier démarrage,
+   puis les recharge quand DATA_VERSION change.
    usage : node scripts/export-seed.js */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 
 const source = readFileSync(new URL('../../js/data.js', import.meta.url), 'utf8');
 // data.js est un script navigateur (des const globales) : on l'exécute à part et on récupère ses valeurs
-const data = runInNewContext(`${source}\n;({ TEAMS, NEWS, NEWS_CATEGORIES, PRODUCTS, SIZES, FLOCAGE_PRICE })`);
+const data = runInNewContext(`${source}\n;({ DATA_VERSION, TEAMS, NEWS, NEWS_CATEGORIES, PRODUCTS, SIZES, FLOCAGE_PRICE })`);
 
 const seed = {
+  version: data.DATA_VERSION,
   teams: Object.entries(data.TEAMS).map(([id, t], i) => ({
     id, name: t.name, short: t.short, season: t.season, feminine: t.feminine, photo: t.photo, intro: t.intro,
     staff: t.staff, lineup: t.lineup, sort: i, players: t.players,
