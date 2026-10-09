@@ -38,8 +38,8 @@ const TEAMS = {
       { id: 'rodrygo', name: 'Rodrygo Goes', short: 'Rodrygo', pos: 'ATT', photo: 'img/joueurs/rodrygo.webp' },
       { id: 'vinicius', name: 'Vinícius Jr.', short: 'Vinícius', pos: 'ATT', photo: 'img/joueurs/vinicius.webp' },
     ],
-    // Onze type en 4-3-3 (identifiants des joueurs, de l'arrière vers l'avant)
-    lineup: { GK: ['courtois'], DEF: ['carvajal', 'militao', 'rudiger', 'mendy'], MID: ['valverde', 'tchouameni', 'kroos'], ATT: ['rodrygo', 'bellingham', 'vinicius'] },
+    // Onze type en 4-3-3 (identifiants des joueurs, de l'arrière vers l'avant ; dans chaque ligne, de gauche à droite sur le terrain)
+    lineup: { GK: ['courtois'], DEF: ['mendy', 'militao', 'rudiger', 'carvajal'], MID: ['valverde', 'tchouameni', 'kroos'], ATT: ['vinicius', 'bellingham', 'rodrygo'] },
   },
   feminine: {
     name: 'Équipe première féminine',
@@ -69,7 +69,7 @@ const TEAMS = {
       { id: 'carla', name: 'Carla Camacho', pos: 'ATT', photo: 'img/joueurs/carla.webp' },
       { id: 'hayley', name: 'Hayley Raso', pos: 'ATT', photo: 'img/joueurs/hayley.webp' },
     ],
-    lineup: { GK: ['misa'], DEF: ['kenti', 'ivana', 'kathellen', 'sofia'], MID: ['teresa', 'sandie', 'caroline'], ATT: ['athenea', 'naomie', 'hayley'] },
+    lineup: { GK: ['misa'], DEF: ['sofia', 'ivana', 'kathellen', 'kenti'], MID: ['teresa', 'sandie', 'caroline'], ATT: ['hayley', 'naomie', 'athenea'] },
   },
   academie: {
     name: 'Académie · Real Madrid Castilla',
@@ -99,7 +99,7 @@ const TEAMS = {
       { id: 'lopez', name: 'Noel Lopez', pos: 'ATT' },
       { id: 'manoz', name: 'Alvaro Manoz', pos: 'ATT' },
     ],
-    lineup: { GK: ['conchello'], DEF: ['antonin', 'augusto', 'carillo', 'herrera'], MID: ['paz', 'fernandez', 'angel'], ATT: ['bravo', 'lopez', 'manoz'] },
+    lineup: { GK: ['conchello'], DEF: ['herrera', 'augusto', 'carillo', 'antonin'], MID: ['paz', 'fernandez', 'angel'], ATT: ['manoz', 'lopez', 'bravo'] },
   },
 };
 
