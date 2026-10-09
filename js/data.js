@@ -4,7 +4,7 @@
 
 /* Version des données de départ : à changer quand on modifie ce fichier, pour que l'API les recharge.
    Les photos portent ?v=2627 : changer ce numéro quand on remplace une photo, sinon les navigateurs gardent l'ancienne. */
-const DATA_VERSION = '2026-27.2';
+const DATA_VERSION = '2026-27.3';
 
 const POSITIONS = {
   GK: { label: 'Gardien', labelF: 'Gardienne', plural: 'Gardiens' },
@@ -19,7 +19,7 @@ const TEAMS = {
     short: 'Masculine',
     season: 'Effectif 2026-27',
     feminine: false,
-    photo: 'img/equipes/senior.webp',
+    photo: 'img/equipes/masculine-2026-27.webp',
     intro: "Quinze fois championne d'Europe, l'équipe première porte l'héritage du meilleur club du XXᵉ siècle.",
     staff: [
       { name: 'Florentino Pérez', role: 'Président du club', photo: 'img/staff/florentino.webp' },
@@ -60,7 +60,7 @@ const TEAMS = {
     short: 'Féminine',
     season: 'Effectif 2026-27',
     feminine: true,
-    photo: 'img/equipes/seniorfemme.webp',
+    photo: 'img/equipes/feminine-2026-27.webp',
     intro: "Une équipe ambitieuse qui fait grandir le football féminin sous le maillot blanc.",
     staff: [
       { name: 'Florentino Pérez', role: 'Président du club', photo: 'img/staff/florentino.webp' },
@@ -99,7 +99,7 @@ const TEAMS = {
     short: 'Académie',
     season: 'Effectif 2026-27',
     feminine: false,
-    photo: 'img/equipes/castilla.webp',
+    photo: 'img/equipes/castilla-2026-27.webp',
     intro: "La Fábrica, l'école du club : ici se forment les talents qui rêvent du Bernabéu.",
     staff: [
       { name: 'Florentino Pérez', role: 'Président du club', photo: 'img/staff/florentino.webp' },

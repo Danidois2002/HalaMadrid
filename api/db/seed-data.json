@@ -1,5 +1,5 @@
 {
-  "version": "2026-27.2",
+  "version": "2026-27.3",
   "teams": [
     {
       "id": "masculine",
@@ -7,7 +7,7 @@
       "short": "Masculine",
       "season": "Effectif 2026-27",
       "feminine": false,
-      "photo": "img/equipes/senior.webp",
+      "photo": "img/equipes/masculine-2026-27.webp",
       "intro": "Quinze fois championne d'Europe, l'équipe première porte l'héritage du meilleur club du XXᵉ siècle.",
       "staff": [
         {
@@ -208,7 +208,7 @@
       "short": "Féminine",
       "season": "Effectif 2026-27",
       "feminine": true,
-      "photo": "img/equipes/seniorfemme.webp",
+      "photo": "img/equipes/feminine-2026-27.webp",
       "intro": "Une équipe ambitieuse qui fait grandir le football féminin sous le maillot blanc.",
       "staff": [
         {
@@ -403,7 +403,7 @@
       "short": "Académie",
       "season": "Effectif 2026-27",
       "feminine": false,
-      "photo": "img/equipes/castilla.webp",
+      "photo": "img/equipes/castilla-2026-27.webp",
       "intro": "La Fábrica, l'école du club : ici se forment les talents qui rêvent du Bernabéu.",
       "staff": [
         {
