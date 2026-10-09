@@ -1,12 +1,9 @@
-/* Exporte les données du site (js/data.js) vers db/seed-data.json : l'API les charge au premier démarrage,
+/* Exporte les données du site (src/data.js) vers db/seed-data.json : l'API les charge au premier démarrage,
    puis les recharge quand DATA_VERSION change.
    usage : node scripts/export-seed.js */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { runInNewContext } from 'node:vm';
+import { writeFileSync } from 'node:fs';
 
-const source = readFileSync(new URL('../../js/data.js', import.meta.url), 'utf8');
-// data.js est un script navigateur (des const globales) : on l'exécute à part et on récupère ses valeurs
-const data = runInNewContext(`${source}\n;({ DATA_VERSION, TEAMS, NEWS, NEWS_CATEGORIES, PRODUCTS, SIZES, FLOCAGE_PRICE })`);
+const data = await import('../../src/data.js');
 
 const seed = {
   version: data.DATA_VERSION,

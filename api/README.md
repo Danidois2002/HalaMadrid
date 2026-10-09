@@ -49,7 +49,7 @@ npm run dev
 
 L'API démarre sur `http://localhost:3000`. Sans configuration, elle utilise **PGlite**, un vrai PostgreSQL compilé en WebAssembly qui tourne dans Node : il n'y a rien à installer. Pour garder les données entre deux lancements, copiez `.env.example` en `.env`. Au premier démarrage, la base est remplie avec `db/seed-data.json`.
 
-Le site (`index.html`) utilise automatiquement l'API locale quand il est ouvert sur `localhost`.
+Le site React (`npm run dev` à la racine du dépôt) utilise automatiquement l'API locale quand il est ouvert sur `localhost`.
 
 ## Tests
 
@@ -77,10 +77,10 @@ Ils sont aussi lancés par GitHub Actions à chaque modification du dossier `api
    - `ADMIN_PASSWORD` : le mot de passe du compte admin privé.
 
    `JWT_SECRET` est généré automatiquement.
-3. Au premier démarrage, l'API crée les tables et remplit la base. Ensuite, à chaque changement de `DATA_VERSION` dans `js/data.js` (puis `node scripts/export-seed.js`), elle recharge le contenu du club : équipes, effectifs, actualités et produits. Les ajouts faits depuis l'espace admin sont conservés.
-4. Mettre l'adresse de l'API (`https://….onrender.com`) dans `js/config.js`, puis pousser sur GitHub.
+3. Au premier démarrage, l'API crée les tables et remplit la base. Ensuite, à chaque changement de `DATA_VERSION` dans `src/data.js` (puis `node scripts/export-seed.js`), elle recharge le contenu du club : équipes, effectifs, actualités et produits. Les ajouts faits depuis l'espace admin sont conservés.
+4. Mettre l'adresse de l'API (`https://….onrender.com`) dans `src/lib/api.js`, puis pousser sur GitHub.
 
-Sur l'offre gratuite de Render, l'API se met en veille après 15 minutes sans visite : le premier appel peut prendre jusqu'à une minute. Le site s'affiche tout de suite avec les données de `js/data.js`, puis passe sur celles de l'API quand elle répond.
+Sur l'offre gratuite de Render, l'API se met en veille après 15 minutes sans visite : le premier appel peut prendre jusqu'à une minute. Le site s'affiche tout de suite avec les données de `src/data.js`, puis passe sur celles de l'API quand elle répond.
 
 ## Structure
 
@@ -97,7 +97,7 @@ api/
 │   └── routes/          # auth, contenus (équipes, actualités, produits), commandes
 ├── db/
 │   ├── schema.sql       # tables, contraintes et index
-│   └── seed-data.json   # données de départ versionnées (générées depuis js/data.js)
+│   └── seed-data.json   # données de départ versionnées (générées depuis src/data.js)
 ├── scripts/export-seed.js
 └── test/api.test.js
 ```

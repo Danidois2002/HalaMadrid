@@ -4,16 +4,16 @@
 
 /* Version des données de départ : à changer quand on modifie ce fichier, pour que l'API les recharge.
    Les photos portent ?v=2627 : changer ce numéro quand on remplace une photo, sinon les navigateurs gardent l'ancienne. */
-const DATA_VERSION = '2026-27.4';
+export const DATA_VERSION = '2026-27.4';
 
-const POSITIONS = {
+export const POSITIONS = {
   GK: { label: 'Gardien', labelF: 'Gardienne', plural: 'Gardiens' },
   DEF: { label: 'Défenseur', labelF: 'Défenseuse', plural: 'Défenseurs' },
   MID: { label: 'Milieu', labelF: 'Milieu', plural: 'Milieux' },
   ATT: { label: 'Attaquant', labelF: 'Attaquante', plural: 'Attaquants' },
 };
 
-const TEAMS = {
+export const TEAMS = {
   masculine: {
     name: 'Équipe première masculine',
     short: 'Masculine',
@@ -134,16 +134,16 @@ const TEAMS = {
 };
 
 /* Palmarès (octobre 2026) */
-const HONOURS = [
+export const HONOURS = [
   { value: 15, label: 'Ligues des champions' },
   { value: 36, label: 'Championnats d’Espagne' },
   { value: 9, label: 'Titres mondiaux' },
   { value: 6, label: 'Supercoupes d’Europe' },
 ];
 
-const NEWS_CATEGORIES = ['Matchs', 'Équipe', 'Récompenses', 'Sélections'];
+export const NEWS_CATEGORIES = ['Matchs', 'Équipe', 'Récompenses', 'Sélections'];
 /* Actualités, de la plus récente à la plus ancienne */
-const NEWS = [
+export const NEWS = [
   { id: 'convocation-villarreal', title: 'Real Madrid-Villarreal : la liste des convoqués', cat: 'Matchs', date: '2026-10-09', img: 'img/actus/convocation-villarreal.webp' },
   { id: 'mourinho-villarreal', title: 'Mourinho : « Nous devons prendre les points » contre Villarreal', cat: 'Matchs', date: '2026-10-09', img: 'img/actus/mourinho-villarreal.webp' },
   { id: 'entrainement-villarreal', title: 'Dernier entraînement avant de recevoir Villarreal', cat: 'Équipe', date: '2026-10-09', img: 'img/actus/entrainement-villarreal.webp' },
@@ -156,7 +156,7 @@ const NEWS = [
 ];
 
 /* Boutique : les maillots sont dessinés en SVG (voir jerseySvg dans app.js) */
-const PRODUCTS = [
+export const PRODUCTS = [
   {
     id: 'domicile', type: 'jersey', name: 'Maillot domicile', tag: 'Le classique', price: 90,
     desc: 'Le blanc du Bernabéu, col et poignets vert profond, liseré bordeaux sur les épaules.',
@@ -194,11 +194,11 @@ const PRODUCTS = [
   { id: 'ballon', type: 'ball', name: 'Ballon d’entraînement', tag: 'Taille 5', price: 30, desc: 'Le ballon pour travailler sa conduite comme à Valdebebas.' },
 ];
 
-const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-const FLOCAGE_PRICE = 15;
+export const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+export const FLOCAGE_PRICE = 15;
 
 /* Joueurs proposés pour le flocage (numéros de la saison 2026-27) */
-const FLOCAGE_PLAYERS = [
+export const FLOCAGE_PLAYERS = [
   { name: 'COURTOIS', number: 1 }, { name: 'ASENCIO', number: 2 }, { name: 'MILITÃO', number: 3 },
   { name: 'HUIJSEN', number: 4 }, { name: 'BELLINGHAM', number: 5 }, { name: 'CAMAVINGA', number: 6 },
   { name: 'VINI JR.', number: 7 }, { name: 'VALVERDE', number: 8 }, { name: 'ENDRICK', number: 9 },
@@ -208,7 +208,7 @@ const FLOCAGE_PLAYERS = [
   { name: 'RÜDIGER', number: 22 }, { name: 'DUMFRIES', number: 24 }, { name: 'DIOMANDE', number: 25 },
 ];
 
-const CLUB = {
+export const CLUB = {
   stadium: 'Estadio Santiago Bernabéu',
   address: 'Av. de Concha Espina, 1, 28036 Madrid, Espagne',
   phone: '+34 913 984 300',

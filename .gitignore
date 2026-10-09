@@ -6,3 +6,7 @@ _ancienne-version/
 api/node_modules/
 api/.env
 api/.pglite/
+
+# Site React : dépendances et build (publié par GitHub Actions)
+/node_modules/
+/dist/

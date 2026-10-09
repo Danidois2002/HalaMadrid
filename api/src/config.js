@@ -10,7 +10,7 @@ export function loadConfig(env = process.env) {
     databaseUrl: env.DATABASE_URL || 'pglite://memory',
     jwtSecret: env.JWT_SECRET,
     // Origines autorisées à appeler l'API depuis un navigateur
-    corsOrigins: list(env.CORS_ORIGINS, 'http://localhost,http://127.0.0.1,https://danidois2002.github.io'),
+    corsOrigins: list(env.CORS_ORIGINS, 'http://localhost,http://127.0.0.1,http://localhost:5173,http://localhost:4173,https://danidois2002.github.io'),
     // Compte admin privé : créé ou mis à jour au démarrage si ADMIN_PASSWORD est défini
     adminUsername: env.ADMIN_USERNAME || 'admin',
     adminPassword: env.ADMIN_PASSWORD || '',

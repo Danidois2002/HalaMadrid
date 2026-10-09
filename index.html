@@ -6,90 +6,13 @@
   <title>¡Hala Madrid! — Site de supporters du Real Madrid</title>
   <meta name="description" content="Projet étudiant : équipes, actualités et boutique de supporters du Real Madrid, avec configurateur de maillot et espace admin." />
   <meta name="theme-color" content="#0b1a36" />
-  <link rel="icon" href="img/crest.webp" type="image/webp" />
+  <link rel="icon" href="/img/crest.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=7" />
 </head>
 <body>
-  <a class="skip-link" href="#app">Aller au contenu</a>
-
-  <header class="topbar" id="topbar">
-    <a class="brand" href="#/" aria-label="Accueil">
-      <span class="crest-badge"><img src="img/crest.webp" alt="" width="300" height="403" /></span>
-      <span class="brand-text">Real Madrid <small>Site de supporters</small></span>
-    </a>
-    <nav class="nav" id="nav" aria-label="Navigation principale">
-      <a href="#/" data-route="accueil">Accueil</a>
-      <a href="#/equipes/masculine" data-route="equipes">Équipes</a>
-      <a href="#/actualites" data-route="actualites">Actualités</a>
-      <a href="#/boutique" data-route="boutique">Boutique</a>
-      <a href="#/contact" data-route="contact">Contact</a>
-    </nav>
-    <div class="topbar-actions">
-      <a class="icon-btn account" href="#/connexion" id="account-link">
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9a7 7 0 0 1 14 0"/></svg>
-        <span id="account-label">Connexion</span>
-      </a>
-      <button class="icon-btn cart-btn" type="button" id="cart-open" aria-label="Ouvrir le panier">
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M5 7h14l-1.2 12.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8zM9 7V6a3 3 0 0 1 6 0v1"/></svg>
-        <span class="cart-count" id="cart-count" hidden>0</span>
-      </button>
-      <button class="icon-btn menu-btn" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu"><span></span><span></span></button>
-    </div>
-  </header>
-  <div class="admin-bar" id="admin-bar" hidden>
-    <span id="admin-bar-text"><b>Mode admin</b> : vous pouvez publier des actualités et modifier les effectifs.</span>
-    <button type="button" class="link-btn" data-logout>Se déconnecter</button>
-  </div>
-
-  <main id="app" tabindex="-1"></main>
-
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <span class="crest-badge crest-lg"><img src="img/crest.webp" alt="" width="300" height="403" loading="lazy" /></span>
-        <p class="footer-motto">¡Hala Madrid<br>y nada más!</p>
-      </div>
-      <div>
-        <h2>Le club</h2>
-        <a href="#/equipes/masculine">Équipe masculine</a>
-        <a href="#/equipes/feminine">Équipe féminine</a>
-        <a href="#/equipes/academie">Académie</a>
-      </div>
-      <div>
-        <h2>Explorer</h2>
-        <a href="#/actualites">Actualités</a>
-        <a href="#/boutique">Boutique</a>
-        <a href="#/contact">Contact</a>
-      </div>
-      <p class="disclaimer">Projet étudiant non officiel réalisé par Danial Bitar, sans lien avec le Real Madrid C.F. Les noms, logos et photos appartiennent à leurs propriétaires respectifs. La boutique est une démonstration : aucun paiement n'est demandé.</p>
-    </div>
-  </footer>
-
-  <!-- Panier -->
-  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
-  <aside class="drawer" id="cart" aria-labelledby="cart-title" aria-hidden="true">
-    <header class="drawer-head">
-      <h2 id="cart-title">Votre panier</h2>
-      <button class="close-btn" type="button" data-close-cart aria-label="Fermer le panier">×</button>
-    </header>
-    <div class="drawer-body" id="cart-body"></div>
-    <footer class="drawer-foot" id="cart-foot"></footer>
-  </aside>
-
-  <!-- Fenêtre générique (confirmation de commande, formulaires admin) -->
-  <dialog class="modal" id="modal" aria-labelledby="modal-title">
-    <button class="close-btn modal-close" type="button" data-close-modal aria-label="Fermer">×</button>
-    <div id="modal-content"></div>
-  </dialog>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script src="js/data.js?v=9"></script>
-  <script src="js/config.js?v=2"></script>
-  <script src="js/api.js?v=1"></script>
-  <script src="js/app.js?v=9"></script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
