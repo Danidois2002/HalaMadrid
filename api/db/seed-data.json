@@ -1,5 +1,5 @@
 {
-  "version": "2026-27.3",
+  "version": "2026-27.4",
   "teams": [
     {
       "id": "masculine",
@@ -32,14 +32,14 @@
           "trent"
         ],
         "MID": [
-          "guler",
+          "bellingham",
           "tchouameni",
           "valverde"
         ],
         "ATT": [
-          "vinicius",
+          "diomande",
           "mbappe",
-          "diomande"
+          "guler"
         ]
       },
       "sort": 0,

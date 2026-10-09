@@ -4,7 +4,7 @@
 
 /* Version des données de départ : à changer quand on modifie ce fichier, pour que l'API les recharge.
    Les photos portent ?v=2627 : changer ce numéro quand on remplace une photo, sinon les navigateurs gardent l'ancienne. */
-const DATA_VERSION = '2026-27.3';
+const DATA_VERSION = '2026-27.4';
 
 const POSITIONS = {
   GK: { label: 'Gardien', labelF: 'Gardienne', plural: 'Gardiens' },
@@ -53,7 +53,7 @@ const TEAMS = {
       { id: 'diomande', name: 'Yan Diomande', pos: 'ATT', photo: 'img/joueurs/diomande.webp?v=2627' },
     ],
     // Onze type en 4-3-3 (identifiants des joueurs, de l'arrière vers l'avant ; dans chaque ligne, de gauche à droite sur le terrain)
-    lineup: { GK: ['courtois'], DEF: ['cucurella', 'huijsen', 'konate', 'trent'], MID: ['guler', 'tchouameni', 'valverde'], ATT: ['vinicius', 'mbappe', 'diomande'] },
+    lineup: { GK: ['courtois'], DEF: ['cucurella', 'huijsen', 'konate', 'trent'], MID: ['bellingham', 'tchouameni', 'valverde'], ATT: ['diomande', 'mbappe', 'guler'] },
   },
   feminine: {
     name: 'Équipe première féminine',

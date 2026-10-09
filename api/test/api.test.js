@@ -31,7 +31,7 @@ describe('lecture publique', () => {
     assert.deepEqual(body.map((t) => t.id), ['masculine', 'feminine', 'academie']);
     const men = body[0];
     assert.equal(men.players.length, 25);
-    assert.deepEqual(men.lineup.ATT, ['vinicius', 'mbappe', 'diomande']);
+    assert.deepEqual(men.lineup.ATT, ['diomande', 'mbappe', 'guler']);
     assert.equal(men.staff[1].name, 'José Mourinho');
   });
 
