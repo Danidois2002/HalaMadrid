@@ -1129,7 +1129,7 @@ function route(options = {}) {
   }
   app.innerHTML = `<div class="page">${html}</div>`;
   setup();
-  if (options.keepScroll) $('.reveal', app).forEach((el) => el.classList.add('in-view'));
+  if (options.keepScroll) $$('.reveal', app).forEach((el) => el.classList.add('in-view'));
   observeReveals();
   const key = section || 'accueil';
   $$('.nav a').forEach((a) => { if (a.dataset.route === key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
